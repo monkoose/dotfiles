@@ -20,27 +20,25 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 
-autoload -Uz compinit && compinit
+zicompinit
 
-# Edit line in the editor
-bindkey -e
-autoload -z edit-command-line
-zle -N edit-command-line
-bindkey "^[e" edit-command-line
-
-zinit light Aloxaf/fzf-tab
-zinit light zsh-users/zsh-completions
-zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
+zinit ice compile='(pure|async).zsh' pick='async.zsh' src='pure.zsh'
 zinit light sindresorhus/pure
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-history-substring-search
-bindkey '^P' history-substring-search-up
-bindkey '^N' history-substring-search-down
-typeset -g HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=green,fg=black,'
-typeset -g HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=black,'
+
+# zsh-users/zsh-syntax-highlighting
+zinit wait='0' lucid light-mode for \
+    Aloxaf/fzf-tab \
+    zsh-users/zsh-completions \
+    zdharma/fast-syntax-highlighting \
+    atload="bindkey '^P' history-substring-search-up;
+        bindkey '^N' history-substring-search-down;
+        typeset -g HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=green,fg=black,';
+        typeset -g HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=black,'" \
+        zsh-users/zsh-history-substring-search
+
 HISTFILE=~/.zsh_history
-HISTSIZE=5000
-SAVEHIST=5000
+HISTSIZE=2000
+SAVEHIST=2000
 setopt appendhistory
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_FIND_NO_DUPS
@@ -51,6 +49,12 @@ kitty + complete setup zsh | source /dev/stdin
 source "/usr/share/fzf/completion.zsh" 2> /dev/null
 source "/usr/share/fzf/key-bindings.zsh" 2> /dev/null
 
+# Edit line in the editor
+bindkey -e
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^[e" edit-command-line
+
 # Aliases
 alias ls="exa"
 alias rm="rm -i"
@@ -59,9 +63,8 @@ alias rr="ranger"
 alias tree="tree -C"
 alias set_mac="sudo $HOME/Documents/utils/random_mac.sh"
 alias mem_clean="sudo swapoff -a && sudo swapon -a && sudo sh -c 'echo 3 >/proc/sys/vm/drop_caches'"
-alias kbr="setxkbmap -option ctrl:swap_lalt_lctl && setxkbmap -option shift:both_capslock"
+alias kbrd="setxkbmap -option ctrl:swap_lalt_lctl && setxkbmap -option shift:both_capslock && xcape -e 'Control_L=Escape'"
 alias bright-norm="xrandr --output HDMI-A-2 --brightness 1 --gamma 1:1:1"
 alias bright-low="xrandr --output HDMI-A-2 --brightness 0.6 --gamma 1:1:0.8"
 
 export FZF_DEFAULT_OPTS='--pointer=● --marker=▶ --ansi --bind "alt-t:toggle-preview,ctrl-n:preview-down,ctrl-p:preview-up,ctrl-l:accept,ctrl-r:clear-screen,alt-p:next-history,alt-n:previous-history" --height 40% --layout=reverse --tabstop=2 --color=hl:#f158a6,fg+:#b8af96,hl+:#f158a6,bg+:#3b312b,border:#40362f,gutter:#1f1a17,pointer:#d3c94b,prompt:#c57c41,marker:#b2809f,info:#70a17c --inline-info --margin=0,1,0,0 --prompt=">> " --history=/home/monkoose/.fzf_history --history-size=500'
-export PATH="$HOME/.cabal/bin:/home/monkoose/.ghcup/bin:$PATH"
