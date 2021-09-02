@@ -1,5 +1,5 @@
 ## dotfiles with chezmoi
 
 ```sh
-chezmoi init --apply username
+chezmoi init --apply monkoose
 ```
