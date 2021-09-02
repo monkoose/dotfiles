@@ -1,0 +1,205 @@
+/* ==========================================================================
+   Rofi color theme
+
+   Based on the Gruvbox color scheme for Vim by morhetz
+   https://github.com/morhetz/gruvbox
+
+   File: gruvbox.rasi
+   Desc: Gruvbox color theme for Rofi
+   Author: monkoose <b@bah.im>
+   ========================================================================== */
+
+* {
+
+    /* Gruvbox dark colors */
+    gruvgox-bg0:          #282828;
+    gruvgox-bg0-soft:     #32302f;
+    gruvgox-bg3:          #665c54;
+    gruvgox-fg0:          #fbf1c7;
+    gruvgox-fg1:          #ebdbb2;
+    gruvgox-red-dark:     #761f1b;
+    gruvgox-red-light:    #a53629;
+    gruvgox-yellow-dark:  #71541b;
+    gruvgox-yellow-light: #99741c;
+    gruvgox-gray:         #a89984;
+
+    /* Theme settings */
+    highlight: bold #fabd2f;
+    scrollbar: true;
+
+    /* Theme colors */
+    background:                  @gruvgox-bg0;
+    background-color:            @background;
+    foreground:                  @gruvgox-fg1;
+    border-color:                @gruvgox-gray;
+    separatorcolor:              @border-color;
+    scrollbar-handle:            @border-color;
+
+    normal-background:           @background;
+    normal-foreground:           @foreground;
+    alternate-normal-background: @gruvgox-bg0-soft;
+    alternate-normal-foreground: @foreground;
+    selected-normal-background:  @gruvgox-bg3;
+    selected-normal-foreground:  @gruvgox-fg0;
+
+    active-background:           @gruvgox-yellow-dark;
+    active-foreground:           @background;
+    alternate-active-background: @active-background;
+    alternate-active-foreground: @active-foreground;
+    selected-active-background:  @gruvgox-yellow-light;
+    selected-active-foreground:  @active-foreground;
+
+    urgent-background:           @gruvgox-red-dark;
+    urgent-foreground:           @background;
+    alternate-urgent-background: @urgent-background;
+    alternate-urgent-foreground: @urgent-foreground;
+    selected-urgent-background:  @gruvgox-red-light;
+    selected-urgent-foreground:  @urgent-foreground;
+}
+
+window {
+    background-color: @gruvgox-gray;
+    border:           5;
+    padding:          0;
+    width: 40%;
+}
+
+mainbox {
+    background-color: @gruvgox-gray;
+    spacing: 0;
+    border:  0;
+    padding: 0;
+}
+
+message {
+    border:       2px 0 0;
+    border-color: @separatorcolor;
+    padding:      1px;
+}
+
+textbox {
+    highlight:  @highlight;
+    text-color: @normal-foreground;
+    padding: 4;
+    border: 0 0 3 0;
+}
+
+listview {
+    border-color: @separatorcolor;
+    scrollbar:    @scrollbar;
+    lines: 10;
+}
+
+element {
+    border:  0;
+    padding: 6;
+}
+
+element.normal.normal {
+    background-color: @normal-background;
+    text-color:       @normal-foreground;
+}
+
+element.normal.urgent {
+    background-color: @urgent-background;
+    text-color:       @normal-foreground;
+}
+
+element.normal.active {
+    background-color: @active-background;
+    text-color:       @normal-foreground;
+}
+
+element.selected.normal {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+}
+
+element.selected.urgent {
+    background-color: @selected-urgent-background;
+    text-color:       @selected-normal-foreground;
+}
+
+element.selected.active {
+    background-color: @selected-active-background;
+    text-color:       @selected-normal-foreground;
+}
+
+element.alternate.normal {
+    background-color: @alternate-normal-background;
+    text-color:       @alternate-normal-foreground;
+}
+
+element.alternate.urgent {
+    background-color: @alternate-urgent-background;
+    text-color:       @normal-foreground;
+}
+
+element.alternate.active {
+    background-color: @alternate-active-background;
+    text-color:       @normal-foreground;
+}
+
+scrollbar {
+    width:        10;
+    border:       0;
+    margin: 1 3 1 1;
+    handle-color: @scrollbar-handle;
+    handle-width: 10;
+    padding:      0;
+}
+
+mode-switcher {
+    border:       2 0 0;
+    background-color: @gruvgox-gray;
+    border-color: @separatorcolor;
+}
+
+inputbar {
+    border: 0 0 2 0;
+    text-color: @normal-foreground;
+    children:   [ prompt, textbox-prompt-sep, entry, case-indicator ];
+}
+
+num-rows {
+  enabled: true;
+}
+
+case-indicator,
+entry,
+prompt {
+    font: "Iosevka Monkoose Bold 20";
+    text-color: @normal-foreground;
+}
+
+entry,
+case-indicator {
+  padding: 6 4;
+}
+
+prompt {
+  enabled: false;
+  padding: 6 20;
+  background-color: @selected-normal-background;
+}
+
+button {
+  padding: 4 6;
+  horizontal-align: 0.47;
+  text-color: @normal-foreground;
+}
+
+button.selected {
+    font: "Iosevka Monkoose Bold 16";
+    background-color: @gruvgox-yellow-dark;
+    text-color:       @selected-normal-foreground;
+}
+
+textbox-prompt-sep {
+    expand:     false;
+}
+
+element-text, element-icon {
+    background-color: inherit;
+    text-color:       inherit;
+}

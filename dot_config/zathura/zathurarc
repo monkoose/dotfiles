@@ -1,0 +1,13 @@
+set font "Noto Sans 12"
+set window-title-basename true
+set statusbar-basename true
+set guioptions none
+set scroll-full-overlap 0.05
+set recolor-lightcolor "#888888"
+set recolor-darkcolor "#000000"
+set recolor true
+set recolor-keephue true
+set recolor-reverse-video false
+map <C-j> scroll half-down
+map <C-k> scroll half-up
+set sandbox none

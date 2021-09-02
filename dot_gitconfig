@@ -1,0 +1,9 @@
+[core]
+	excludesfile = /home/monkoose/.gitignore
+[user]
+	email = monkoose@protonmail.com
+	name = monkoose
+[init]
+	defaultBranch = main
+[credential]
+	helper = /usr/lib/git-core/git-credential-gnome-keyring

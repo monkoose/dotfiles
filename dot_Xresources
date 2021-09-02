@@ -1,0 +1,4 @@
+!Sxiv config
+Sxiv.font:       Iosevka Monkoose:size=16
+Sxiv.foreground: #7680ac
+Sxiv.background: #1f1a17

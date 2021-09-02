@@ -1,0 +1,33 @@
+configuration {
+  modi: "run,window,drun";
+  font: "Iosevka Monkoose 16";
+  /* show-icons: true; */
+  /* icon-theme: ; */
+  terminal: "kitty";
+  no-plugins: true;
+  sidebar-mode: true;
+  drun-match-fields: "name,generic,exec";
+  combi-modi: "drun,run";
+  theme: "gruvbox.rasi";
+  kb-accept-entry: "Control+l,Return";
+  kb-mode-complete: "Control+space";
+  kb-remove-to-eol: "";
+  kb-clear-line: "Control+Alt+w";
+  kb-cancel: "Escape,Super+r";
+  kb-row-up: "Up,Control+p,Control+k";
+  kb-row-down: "Down,Control+n,Control+j";
+  kb-move-char-back: "Alt-h,Left,Control+b";
+  kb-move-char-forward: "Alt-l,Right,Control+f";
+  kb-remove-word-back: "Control+w,Control+Alt+h,Control+BackSpace";
+  kb-row-select: "Alt+o";
+  kb-mode-next: "Alt+i";
+  kb-mode-previous: "Shift+Alt+i";
+  timeout {
+      action: "kb-cancel";
+      delay:  0;
+  }
+  filebrowser {
+      directories-first: true;
+      sorting-method:    "name";
+  }
+}
