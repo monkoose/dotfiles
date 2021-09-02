@@ -1,5 +1,5 @@
 ## dotfiles with chezmoi
 
-'''sh
+```sh
 chezmoi init --apply username
-'''
+```
