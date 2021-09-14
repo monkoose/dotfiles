@@ -1,8 +1,4 @@
 #!/bin/sh
-setxkbmap -option ctrl:swap_lalt_lctl
-setxkbmap -option shift:both_capslock
-# need 'xcape' package
-xcape -e "Control_L=Escape"
 
 pactl set-sink-volume 0 65536
 
