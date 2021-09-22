@@ -1,5 +1,5 @@
 #!/bin/sh
-
+setxkbmap -option shift:both_capslock
 pactl set-sink-volume 0 65536
 
 # start some nice programs
