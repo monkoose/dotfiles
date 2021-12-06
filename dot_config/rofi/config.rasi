@@ -8,7 +8,6 @@ configuration {
   sidebar-mode: true;
   drun-match-fields: "name,generic,exec";
   combi-modi: "drun,run";
-  theme: "gruvbox.rasi";
   kb-accept-entry: "Control+l,Return";
   kb-mode-complete: "Control+space";
   kb-remove-to-eol: "";
@@ -31,3 +30,4 @@ configuration {
       sorting-method:    "name";
   }
 }
+@theme "gruvbox.rasi"
