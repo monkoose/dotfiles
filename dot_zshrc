@@ -1,31 +1,14 @@
-### Added by Zinit's installer
-if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
-    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
-        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-        print -P "%F{160}▓▒░ The clone has failed.%f%b"
-fi
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+source "${ZINIT_HOME}/zinit.zsh"
 
-source "$HOME/.zinit/bin/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-
-### End of Zinit's installer chunk
-
-# autoload -Uz compinit && compinit
 zicompinit
 
 zinit ice compile='(pure|async).zsh' pick='async.zsh' src='pure.zsh'
 zinit light sindresorhus/pure
 
-# zsh-users/zsh-syntax-highlighting
-    # atclone"dircolors -b LS_COLORS > clrs.zsh" \
-    # atpull'%atclone' pick"clrs.zsh" nocompile'!' \
-    #     trapd00r/LS_COLORS \
 zinit wait='0' lucid light-mode for \
     Aloxaf/fzf-tab \
-    zdharma/fast-syntax-highlighting \
+    zdharma-continuum/fast-syntax-highlighting \
     atload="bindkey '^P' history-substring-search-up;
         bindkey '^N' history-substring-search-down;
         typeset -g HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=green,fg=black,';
@@ -61,7 +44,6 @@ alias rm="rm -i"
 alias yar="yay -Rscn"
 alias rr="ranger"
 alias tree="tree -C"
-alias rdmd="rdmd -w -de"
 alias set_mac="sudo $HOME/Documents/utils/random_mac.sh"
 alias mem_clean="sudo swapoff -a && sudo swapon -a && sudo sh -c 'echo 3 >/proc/sys/vm/drop_caches'"
 alias bright-norm="xrandr --output HDMI-A-2 --brightness 1 --gamma 1:1:1"
