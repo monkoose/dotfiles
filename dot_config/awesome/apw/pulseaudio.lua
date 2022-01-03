@@ -1,114 +1,47 @@
--- Copyright 2013 mokasin
--- Copyright 2016 monkoose
--- This file is part of the Awesome Pulseaudio Widget (APW).
---
--- APW is free software: you can redistribute it and/or modify
--- it under the terms of the GNU General Public License as published by
--- the Free Software Foundation, either version 3 of the License, or
--- (at your option) any later version.
---
--- APW is distributed in the hope that it will be useful,
--- but WITHOUT ANY WARRANTY; without even the implied warranty of
--- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
--- GNU General Public License for more details.
---
--- You should have received a copy of the GNU General Public License
--- along with APW. If not, see <http://www.gnu.org/licenses/>.
-
-
--- Simple pulseaudio command bindings for Lua.
-local pulseaudio = {}
-
-local cmd = "pacmd"
-local default_sink = ""
-
-function pulseaudio:Create()
-    local o = {}
-    setmetatable(o, self)
-    self.__index = self
-
-    o.Volume = 0     -- volume of default sink
-    o.Mute = false   -- state of the mute flag of the default sink
-
-    -- retreive current state from Pulseaudio
-    pulseaudio.UpdateState(o)
-
-    return o
-end
-
-function pulseaudio:UpdateState()
-    local f = io.popen(cmd .. " dump")
-
-    -- if the cmd can't be found
-    if f == nil then
-        return false
-    end
-
-    local out = f:read("*a")
-    f:close()
-
-    -- get the default sink
-    default_sink = string.match(out, "set%-default%-sink ([^\n]+)")
-
-    if default_sink == nil then
-        default_sink = ""
-        return false
-    end
-
-    -- retreive volume of default sink
-    for sink, value in string.gmatch(out, "set%-sink%-volume ([^%s]+) (0x%x+)") do
-        if sink == default_sink then
-            self.Volume = tonumber(value) / 0x10000
-        end
-    end
-
-    -- retreive mute state of default sink
-    local m
-    for sink, value in string.gmatch(out, "set%-sink%-mute ([^%s]+) (%a+)") do
-        if sink == default_sink then
-            m = value
-        end
-    end
-
-    self.Mute = m == "yes"
-end
-
--- Run process and wait for it to end
 local function run(command)
     local p = io.popen(command)
-    p:read("*a")
     p:close()
 end
 
--- Sets the volume of the default sink to vol from 0 to 1.
-function pulseaudio:SetVolume(vol)
-    if vol > 1 then
-        vol = 1
-    end
-
-    if vol < 0 then
-        vol = 0
-    end
-
-    vol = vol * 0x10000
-    -- set
-    run(cmd .. " set-sink-volume " .. default_sink .. " " .. string.format("0x%x", math.floor(vol)))
-
-    -- and update values
-    self:UpdateState()
+local function run_with_output(command)
+    local p = io.popen(command)
+    local out = p:read("*l")
+    p:close()
+    return out
 end
 
+local cmd = "pactl"
+local default_sink = run_with_output(cmd .. " get-default-sink")
+local Pulseaudio = {}
 
--- Toggles the mute flag of the default default_sink.
-function pulseaudio:ToggleMute()
-    if self.Mute then
-        run(cmd .. " set-sink-mute " .. default_sink .. " 0")
-    else
-        run(cmd .. " set-sink-mute " .. default_sink .. " 1")
-    end
-
-    -- and update values.
-    self:UpdateState()
+function Pulseaudio:new()
+    local o = {}
+    setmetatable(o, self)
+    self.__index = self
+    return o
 end
 
-return pulseaudio
+function Pulseaudio:get_state()
+    -- update volume state
+    local vol = run_with_output(cmd .. " get-sink-volume " .. default_sink)
+    self.volume = tonumber(string.match(vol, "front%-left: %d+ /%s+(%d+)"))
+
+    -- update mute state
+    local mute = run_with_output(cmd .. " get-sink-mute " .. default_sink)
+    self.mute = mute == "Mute: yes"
+end
+
+-- Sets the volume of the default sink to vol from 0 to 100%
+function Pulseaudio:set_volume(vol)
+    vol = math.max(0, math.min(100, vol))
+    run(string.format("%s set-sink-volume %s %d%%", cmd, default_sink, vol))
+    self.volume = vol
+end
+
+-- Toggles the mute flag of the default sink.
+function Pulseaudio:toggle_mute()
+    run(cmd .. " set-sink-mute " .. default_sink .. " 'toggle'")
+    self.mute = not self.mute
+end
+
+return Pulseaudio

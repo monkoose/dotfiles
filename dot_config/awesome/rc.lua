@@ -1,13 +1,11 @@
 -- Imports {{{1
-local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local naughty = require("naughty")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
-local APW = require("apw/widget")
--- local pulse_audio = require("pulseaudio_widget")
+local apw = require("apw/widget")
 local theme = require("themes/boa/theme")
 -- Error handling {{{1
 if awesome.startup_errors then
@@ -46,7 +44,7 @@ local screenshot  = "mkdir -p ~/Pictures/screenshots; " ..
                "scrot '%Y-%m-%d_%H:%M:%S.png' -e 'mv $f ~/Pictures/screenshots/ 2>/dev/null'"
 
 -- Default modkey.
-modkey   = "Mod4"
+local modkey   = "Mod4"
 
 awful.layout.layouts = {
     awful.layout.suit.tile,
@@ -54,7 +52,7 @@ awful.layout.layouts = {
     awful.layout.suit.floating,
 }
 -- Menu {{{1
-mymainmenu = awful.menu({ items = {
+local mymainmenu = awful.menu({ items = {
                                     { "opera",     browser         },
                                     { "terminal",    terminal        },
                                     { "filemanager", filemanager     },
@@ -76,14 +74,22 @@ local separator_clock = wibox.widget.separator {
 }
 
 -- Clock
-local hours = wibox.widget.textclock("%H")
-hours.font = theme.clockhour
-hours.align = "center"
-hours.refresh = 60
-local minutes = wibox.widget.textclock("%M")
-minutes.font = theme.clockminute
-minutes.align = "center"
-minutes.refresh = 60
+local hours = wibox.widget {
+    format = "%H",
+    font = theme.clockhour,
+    align = "center",
+    refresh = 60,
+    widget = wibox.widget.textclock
+}
+
+local minutes = wibox.widget {
+    format = "%M",
+    font = theme.clockminute,
+    align = "center",
+    refresh = 60,
+    widget = wibox.widget.textclock
+}
+
 local myclock_t = awful.tooltip {
     objects        = { hours, minutes, separator_clock },
     timer_function = function()
@@ -156,16 +162,6 @@ local tasklist_buttons = awful.util.table.join(
                      awful.button({ }, 5, function ()
                                               awful.client.focus.byidx(-1)
                                           end))
--- local function set_wallpaper(s)
---     if beautiful.wallpaper then
---         local wallpaper = beautiful.wallpaper
---         if type(wallpaper) == "function" then
---             wallpaper = wallpaper(s)
---         end
---         gears.wallpaper.maximized(wallpaper, s, true)
---     end
--- end
--- screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
     -- set_wallpaper(s)
@@ -212,7 +208,7 @@ awful.screen.connect_for_each_screen(function(s)
             forced_width = 36,
             forced_height = 36,
             widget = wibox.container.background,
-            create_callback = function(self, c, index, objects) --luacheck: no unused args
+            create_callback = function(self, c)
                 self:get_children_by_id('clienticon')[1].client = c
                 local tooltip = awful.tooltip({
                     objects = { self },
@@ -268,7 +264,7 @@ awful.screen.connect_for_each_screen(function(s)
             separator,
             -- pulse_audio
             separator,
-            APW,
+            apw,
             separator,
             s.mylayoutbox,
         },
@@ -280,14 +276,14 @@ root.buttons(awful.util.table.join(
     awful.button({ }, 3, function () mymainmenu:toggle() end)
 ))
 
-clientbuttons = awful.util.table.join(
+local clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function () mymainmenu:hide() end),
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
     awful.button({ modkey }, 1, awful.mouse.client.move),
     awful.button({ }, 3, function () mymainmenu:hide() end),
     awful.button({ modkey }, 3, awful.mouse.client.resize))
 -- Key bindings {{{1
-globalkeys = awful.util.table.join(
+local globalkeys = awful.util.table.join(
 
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description = "show help", group = "awesome"}),
@@ -295,11 +291,11 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "space", function () kbdcfg.switch() end),
 
     -- Volume control keys
-    awful.key({                   }, "XF86AudioRaiseVolume", APW.Up     ),
-    awful.key({                   }, "XF86AudioLowerVolume", APW.Down   ),
-    awful.key({ modkey,           }, "Up", APW.Up     ),
-    awful.key({ modkey,           }, "Down", APW.Down   ),
-    awful.key({                   }, "XF86AudioMute", APW.ToggleMute    ),
+    awful.key({                   }, "XF86AudioRaiseVolume", apw.up     ),
+    awful.key({                   }, "XF86AudioLowerVolume", apw.down   ),
+    awful.key({ modkey,           }, "Up", apw.up     ),
+    awful.key({ modkey,           }, "Down", apw.down   ),
+    awful.key({                   }, "XF86AudioMute", apw.toggle_mute    ),
 
     -- Switch tags
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
@@ -381,7 +377,7 @@ globalkeys = awful.util.table.join(
               {description = "launch rofi_win", group = "launcher"})
 )
 
-clientkeys = awful.util.table.join(
+local clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "f",
         function (c)
             c.fullscreen = not c.fullscreen
