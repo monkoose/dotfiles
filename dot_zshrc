@@ -46,7 +46,7 @@ alias rr="ranger"
 alias tree="tree -C"
 alias set_mac="sudo $HOME/Documents/utils/random_mac.sh"
 alias mem_clean="sudo swapoff -a && sudo swapon -a && sudo sh -c 'echo 3 >/proc/sys/vm/drop_caches'"
-alias bright-norm="xrandr --output HDMI-A-2 --brightness 1 --gamma 1:1:1"
-alias bright-low="xrandr --output HDMI-A-2 --brightness 0.6 --gamma 1:1:0.8"
+alias bright-norm="xrandr --output DVI-0 --brightness 1 --gamma 1:1:1"
+alias bright-low="xrandr --output DVI-0 --brightness 0.6 --gamma 1:1:0.8"
 
 export FZF_DEFAULT_OPTS='--pointer=● --marker=▶ --ansi --bind "alt-t:toggle-preview,ctrl-n:preview-down,ctrl-p:preview-up,ctrl-l:accept,ctrl-r:clear-screen,alt-p:next-history,alt-n:previous-history" --height 40% --layout=reverse --tabstop=2 --color=hl:#f158a6,fg+:#b8af96,hl+:#f158a6,bg+:#3b312b,border:#40362f,gutter:#1f1a17,pointer:#d3c94b,prompt:#c57c41,marker:#b2809f,info:#70a17c --inline-info --margin=0,1,0,0 --prompt=">> " --history=/home/monkoose/.fzf_history --history-size=500'
