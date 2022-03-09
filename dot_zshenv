@@ -27,5 +27,3 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="--preview 'bat -p --color=always --line-range=:100 -- {} 2> /dev/null'"
 export FZF_ALT_C_COMMAND="fd --color=always --type=d --hidden --strip-cwd-prefix -E .git -E __pycache__ -E node_modules"
 export FZF_ALT_C_OPTS="--preview 'tree -C -L 1 --dirsfirst {} | head -50'"
-
-. "$HOME/.cargo/env"

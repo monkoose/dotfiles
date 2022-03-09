@@ -23,7 +23,10 @@ end
 
 function Pulseaudio:get_state()
     -- update volume state
-    local vol = run_with_output(cmd .. " get-sink-volume " .. default_sink)
+    local vol
+    while not vol do
+        vol = run_with_output(cmd .. " get-sink-volume " .. default_sink)
+    end
     self.volume = tonumber(string.match(vol, "front%-left: %d+ /%s+(%d+)"))
 
     -- update mute state

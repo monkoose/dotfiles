@@ -1,12 +1,15 @@
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-source "${ZINIT_HOME}/zinit.zsh"
+zi_home="${HOME}/.zi"
+source "${zi_home}/bin/zi.zsh"
+
+autoload -Uz _zi
+(( ${+_comps} )) && _comps[zi]=_zi
 
 zicompinit
 
-zinit ice compile='(pure|async).zsh' pick='async.zsh' src='pure.zsh'
-zinit light sindresorhus/pure
+zi ice compile='(pure|async).zsh' pick='async.zsh' src='pure.zsh'
+zi light sindresorhus/pure
 
-zinit wait='0' lucid light-mode for \
+zi wait='0' lucid light-mode for \
     Aloxaf/fzf-tab \
     zdharma-continuum/fast-syntax-highlighting \
     atload="bindkey '^P' history-substring-search-up;
