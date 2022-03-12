@@ -4,14 +4,14 @@ local function run(command)
 end
 
 local function run_with_output(command)
-    local p = io.popen(command)
-    local out = p:read("*l")
-    p:close()
+    local f = io.popen(command)
+    local out = f:read("*l")
+    f:close()
     return out
 end
 
 local cmd = "pactl"
-local default_sink = run_with_output(cmd .. " get-default-sink")
+local default_sink = "0"
 local Pulseaudio = {}
 
 function Pulseaudio:new()
@@ -22,12 +22,13 @@ function Pulseaudio:new()
 end
 
 function Pulseaudio:get_state()
-    -- update volume state
-    local vol
-    while not vol do
-        vol = run_with_output(cmd .. " get-sink-volume " .. default_sink)
+    local vol = run_with_output(cmd .. " get-sink-volume " .. default_sink)
+    local ok, result = pcall(string.match, vol, "front%-left: %d+ /%s+(%d+)")
+    if ok then
+        self.volume = tonumber(result)
+    else
+        self.volume = 65536
     end
-    self.volume = tonumber(string.match(vol, "front%-left: %d+ /%s+(%d+)"))
 
     -- update mute state
     local mute = run_with_output(cmd .. " get-sink-mute " .. default_sink)
