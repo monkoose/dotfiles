@@ -1,9 +1,9 @@
 export LANG=en_US.UTF-8
 
-export EDITOR='vim'
-export VIEWER="vim"
+export EDITOR='nvim'
+export VIEWER="nvim"
 export PAGER="less"
-export MANPAGER="vim -c MANPAGER -c 'set nonu nornu nolist noma ls=1 ru' -"
+export MANPAGER="nvim -c 'Man!' -c 'set noma'"
 export BROWSER="opera"
 export GOPATH=$HOME/.go
 export PATH=$PATH:$GOPATH/bin
