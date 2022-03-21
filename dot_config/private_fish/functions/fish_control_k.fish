@@ -1,7 +1,7 @@
 function fish_control_k
     if commandline --paging-mode
-        commandline --function complete-and-search
+        commandline -f complete-and-search
     else
-        commandline --function kill-line
+        commandline -f kill-line
     end
 end

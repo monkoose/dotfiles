@@ -1,8 +1,7 @@
 function fish_control_l
     if commandline --paging-mode
-        commandline --function execute
+        commandline -f execute
     else
-        echo -n (clear | string replace \e\\\[3J "")
-        commandline -f repaint
+        commandline -f accept-autosuggestion
     end
 end
