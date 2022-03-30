@@ -504,7 +504,7 @@ awful.rules.rules = {
           "kitty",
           "Zathura",
           "Sxiv",
-          "Opera"
+          "Opera",
         },
       }, properties = { maximized = true }},
     { rule_any = {
