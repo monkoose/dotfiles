@@ -505,6 +505,7 @@ awful.rules.rules = {
           "Zathura",
           "Sxiv",
           "Opera",
+          "Emacs",
         },
       }, properties = { maximized = true }},
     { rule_any = {
