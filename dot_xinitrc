@@ -15,6 +15,6 @@ xset s off &
 xset -b &
 xsetroot -solid "#575244"
 
-[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
+[[ -f ~/.Xresources ]] && xrdb -merge -I $HOME ~/.Xresources
 
 exec awesome -a

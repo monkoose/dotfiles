@@ -57,5 +57,5 @@ SETUVAR fish_pager_color_description:9c8b5f
 SETUVAR fish_pager_color_prefix:f158a6\x1e\x2d\x2dbold
 SETUVAR fish_pager_color_progress:white\x1e\x2d\x2dbackground\x3d333339
 SETUVAR fish_pager_color_selected_background:\x2dr
-SETUVAR fish_user_paths:/home/monkoose/\x2eluarocks/bin\x1e/home/monkoose/\x2ecargo/bin
+SETUVAR fish_user_paths:/home/monkoose/\x2ecargo/bin
 SETUVAR --export vim:\x2d\x2dcmd\x1eMANPAGER\x1e\x2dc\x1eset\x20nonu\x20nornu\x20nolist\x20noma\x1e\x2d
