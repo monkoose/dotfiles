@@ -1,0 +1,7 @@
+keymap C-o BACK
+keymap C-j NEXT_PAGE
+keymap C-k PREV_PAGE
+keymap C-l GOTO_LINK
+keymap > NEXT_LINK
+keymap < PREV_LINK
+keymap q EXIT
