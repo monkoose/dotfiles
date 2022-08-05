@@ -18,15 +18,6 @@ SETUVAR --export VIEWER:nvim
 SETUVAR __fish_initialized:3400
 SETUVAR _fish_abbr_bright_2D_low:xrandr\x20\x2d\x2doutput\x20eDP\x2d1\x20\x2d\x2dbrightness\x200\x2e6\x20\x2d\x2dgamma\x201\x3a1\x3a0\x2e8
 SETUVAR _fish_abbr_bright_2D_norm:xrandr\x20\x2d\x2doutput\x20eDP\x2d1\x20\x2d\x2dbrightness\x201\x20\x2d\x2dgamma\x201\x3a1\x3a1
-SETUVAR _fish_abbr_gco:git\x20checkout
-SETUVAR _fish_abbr_gst:git\x20status
-SETUVAR _fish_abbr_la:exa\x20\x2dla
-SETUVAR _fish_abbr_ll:exa\x20\x2dl
-SETUVAR _fish_abbr_ls:exa
-SETUVAR _fish_abbr_parr:paru\x20\x2dRcsn
-SETUVAR _fish_abbr_rm:rm\x20\x2di
-SETUVAR _fish_abbr_rr:ranger
-SETUVAR _fish_abbr_tree:tree\x20\x2dC
 SETUVAR fish_color_autosuggestion:5a4b38
 SETUVAR fish_color_cancel:red\x1e\x2d\x2dbold
 SETUVAR fish_color_command:719e44\x1e\x2d\x2dbold
@@ -57,5 +48,5 @@ SETUVAR fish_pager_color_description:9c8b5f
 SETUVAR fish_pager_color_prefix:f158a6\x1e\x2d\x2dbold
 SETUVAR fish_pager_color_progress:white\x1e\x2d\x2dbackground\x3d333339
 SETUVAR fish_pager_color_selected_background:\x2dr
-SETUVAR fish_user_paths:/home/monkoose/\x2ecargo/bin
+SETUVAR fish_user_paths:\x1d
 SETUVAR --export vim:\x2d\x2dcmd\x1eMANPAGER\x1e\x2dc\x1eset\x20nonu\x20nornu\x20nolist\x20noma\x1e\x2d

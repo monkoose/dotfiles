@@ -1,0 +1,7 @@
+e visual
+^J noaction d
+^K noaction u
+^H noaction 16\e(
+^L noaction 16\e)
+h noaction 1\e(
+l noaction 1\e)

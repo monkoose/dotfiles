@@ -3,8 +3,8 @@ set window-title-basename true
 set statusbar-basename true
 set guioptions none
 set scroll-full-overlap 0.05
-set recolor-lightcolor "#606960"
-set recolor-darkcolor "#192219"
+set recolor-lightcolor "#1a1816"
+set recolor-darkcolor "#999692"
 set recolor true
 set recolor-keephue true
 set recolor-reverse-video false
