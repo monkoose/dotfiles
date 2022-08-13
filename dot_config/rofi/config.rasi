@@ -1,9 +1,9 @@
 configuration {
   modi: "run,window,drun";
   font: "Iosevka Monkoose 16";
-  /* show-icons: true; */
+  /* show-irons: true; */
   /* icon-theme: ; */
-  terminal: "kitty";
+  terminal: "st";
   no-plugins: true;
   sidebar-mode: true;
   drun-match-fields: "name,generic,exec";
