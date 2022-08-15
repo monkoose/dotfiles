@@ -6,18 +6,18 @@ return {
   scrollback_lines = 3000,
   font = wezterm.font_with_fallback {
     'Iosevka Monkoose',
-    'Iosevka Nerd',
+    'Iosevka Nerd Font',
   },
   font_size = 15,
   freetype_load_flags = 'NO_AUTOHINT|MONOCHROME',
   term = 'wezterm',
-  initial_rows = 30,
+  initial_rows = 40,
   initial_cols = 200,
   window_padding = {
     left = 3,
     right = 3,
-    top = 10,
-    bottom = 2,
+    top = 8,
+    bottom = 3,
   },
 
   colors = {
