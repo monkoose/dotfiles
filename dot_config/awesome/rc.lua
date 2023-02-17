@@ -28,7 +28,7 @@ beautiful.init("~/.config/awesome/themes/boa/theme.lua")
 local filemanager = "pcmanfm"
 local rofi = "rofi -show run"
 local rofi_win = "rofi -show window"
-local terminal = "wezterm"
+local terminal = "st"
 local browser = "opera" or os.getenv("BROWSER")
 local reboot = "sh -c \"reboot\""
 local poweroff = "sh -c \"poweroff\""
@@ -501,7 +501,7 @@ awful.rules.rules = {
     { rule_any = {
         class = {
           "mpv",
-          "wezterm",
+          terminal,
           "Zathura",
           "Sxiv",
           "Opera",

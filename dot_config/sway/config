@@ -14,7 +14,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term wezterm
+set $term st
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -212,8 +212,7 @@ bar {
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
     # status_command while swaymsg -t get_inputs | jq -r '.[] | select(.identifier == "1:1:AT_Translated_Set_2_keyboard") | .xkb_active_layout_name' | cut -b 1-2; done; do sleep 1; done
-    status_command while ~/.config/sway/status.sh; do sleep 30; done
-    # status_command while date +'%H:%M %d-%m-%Y '; do sleep 30; done
+    status_command while ~/.config/sway/status.sh; do sleep 20; done
 
     colors {
         statusline #cccccc

@@ -2,3 +2,7 @@
 Sxiv.font:       Iosevka Monkoose:size=16
 Sxiv.foreground: #7680ac
 Sxiv.background: #1f1a17
+
+XTerm.vt100.faceName: Iosevka Monkoose:size=14:antialias=true
+XTerm.vt100.foreground: white
+XTerm.vt100.background: black

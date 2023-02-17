@@ -25,10 +25,10 @@
             <string>#3d3834</string>
 
             <key>lineHighlight</key>
-            <string>#3c3836</string>
+            <string>#333130</string>
 
             <key>selection</key>
-            <string>#504945</string>
+            <string>#403937</string>
 
             <key>bracketContentsForeground</key>
             <string>#928374</string>

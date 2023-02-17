@@ -3,7 +3,7 @@ configuration {
   font: "Iosevka Monkoose 16";
   /* show-icons: true; */
   /* icon-theme: ; */
-  terminal: "wezterm";
+  terminal: "st";
   no-plugins: true;
   sidebar-mode: true;
   drun-match-fields: "name,generic,exec";
