@@ -1,26 +1,50 @@
--- Imports {{{
+-- Imports {{{1
+-- If LuaRocks is installed, make sure that packages installed through it are
+-- found (e.g. lgi). If LuaRocks is not installed, do nothing.
+-- pcall(require, "luarocks.loader")
+
+-- Standard awesome library
 local awful = require("awful")
 local gears = require("gears")
 require("awful.autofocus")
+
+-- Widget and layout library
 local wibox = require("wibox")
+-- Theme handling library
 local beautiful = require("beautiful")
+-- Notification library
 local naughty = require("naughty")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
-local apw = require("apw/widget")
-local theme = require("themes/boa/theme")
--- }}}
--- {{{ Error handling
+
+-- Error handling {{{1
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
-naughty.connect_signal("request::display_error", function(message, startup)
-    naughty.notification({
-        urgency = "critical",
-        title = "Oops, an error happened"..(startup and " during startup!" or "!"),
-        message = message
+if awesome.startup_errors then
+    naughty.notify({
+        preset = naughty.config.presets.critical,
+        title = "Oops, there were errors during startup!",
+        text = awesome.startup_errors
     })
-end)
--- }}}
--- Variable definitions {{{
+end
+
+-- Handle runtime errors after startup
+do
+    local in_error = false
+    awesome.connect_signal("debug::error", function (err)
+        -- Make sure we don't go into an endless error loop
+        if in_error then return end
+        in_error = true
+
+        naughty.notify({
+            preset = naughty.config.presets.critical,
+            title = "Oops, an error happened!",
+            text = tostring(err)
+        })
+        in_error = false
+    end)
+end
+
+-- Variable definitions {{{1
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init("~/.config/awesome/themes/boa/theme.lua")
 
@@ -29,7 +53,7 @@ local filemanager = "pcmanfm"
 local rofi = "rofi -show run"
 local rofi_win = "rofi -show window"
 local terminal = "st"
-local browser = "opera" or os.getenv("BROWSER")
+local browser = os.getenv("BROWSER")
 local reboot = "sh -c \"reboot\""
 local poweroff = "sh -c \"poweroff\""
 local screenshot = "mkdir -p ~/Pictures/screenshots; " ..
@@ -43,8 +67,8 @@ awful.layout.layouts = {
     awful.layout.suit.tile.bottom,
     awful.layout.suit.floating,
 }
--- }}}
--- Menu {{{
+
+-- Menu {{{1
 local mymainmenu = awful.menu({
     items = {
         { "browser", browser },
@@ -55,77 +79,55 @@ local mymainmenu = awful.menu({
         { "poweroff", poweroff }
     }
 })
--- }}}
--- Wibox {{{
--- battery widget
-local batterywidget = wibox.widget({
-    align = "center",
-    widget = wibox.widget.textbox
-})
 
-local function getBatteryCapacity()
-    local cap = io.popen("cat /sys/class/power_supply/BAT0/capacity", "r")
-    batterywidget.text = cap:read("*l")
-    cap:close()
-end
+-- Widgets {{{1
 
-getBatteryCapacity()
-local batterywidgettimer = gears.timer({ timeout = 30 })
-batterywidgettimer:connect_signal("timeout", getBatteryCapacity)
-batterywidgettimer:start()
+local power = require('widgets.power')
+local pulse = require("widgets.pulseaudio")
+local connman = require("widgets.connman")
 
 -- Clock
-local separator_clock = wibox.widget.separator({
-    layout = wibox.layout.fixed.vertical,
-    forced_height = 5,
-})
-
-local hours = wibox.widget({
-    format = "%H",
-    font = theme.clockhour,
+local clock = wibox.widget({
+    format = "%H:%M",
+    font = beautiful.clock,
     align = "center",
     refresh = 60,
     widget = wibox.widget.textclock
 })
 
-local minutes = wibox.widget({
-    format = "%M",
-    font = theme.clockminute,
-    align = "center",
-    refresh = 60,
-    widget = wibox.widget.textclock
+local clock_tooltip = awful.tooltip({
+    objects = { clock },
+    delay_show = 0.2,
+    margins_leftright = 10,
+    margins_topbottom = 6,
+    ontop = true,
 })
-
-local myclock_t = awful.tooltip({
-    objects = { hours, minutes, separator_clock },
-    timer_function = function()
-        return os.date('%A\n%d %B %Y\n%T')
-    end,
-    delay_show = 0.5,
-    margins = 10,
-    mode = "outside"
-})
+clock_tooltip:set_text(os.date('%d %B %Y\n%A'))
 
 -- Keyboard map indicator and changer
 local kbdcfg = {
     cmd = "setxkbmap ",
     widget = wibox.widget({
-        image = theme.english,
-        widget = wibox.widget.imagebox
+        image = beautiful.english,
+        widget = wibox.widget.imagebox,
+        align = "center",
+        valign = "center",
     })
 }
 
 kbdcfg.switch = function()
     local us, ru = "us", "ru"
     local f = io.popen(kbdcfg.cmd .. "-query | grep layout")
+    if not f then return end
+
     local is_us = string.find(f:read("*l"), "us")
     f:close()
 
     if is_us then
-        kbdcfg.widget.image = theme.russian
+        kbdcfg.widget.image = beautiful.russian
         os.execute(kbdcfg.cmd .. ru)
     else
-        kbdcfg.widget.image = theme.english
+        kbdcfg.widget.image = beautiful.english
         os.execute(kbdcfg.cmd .. us)
     end
 end
@@ -134,7 +136,7 @@ kbdcfg.widget:buttons(awful.util.table.join(
     awful.button({ }, 1, function () kbdcfg.switch() end))
 )
 
--- Create wibox
+-- Wibox {{{1
 local taglist_buttons = awful.util.table.join(
     awful.button({ }, 1, function(t) t:view_only() end),
     awful.button({ modkey }, 1, function(t)
@@ -188,9 +190,8 @@ awful.screen.connect_for_each_screen(function(s)
         filter = awful.widget.taglist.filter.all,
         buttons = taglist_buttons,
         layout = {
-            spacing = 8,
-            layout = wibox.layout.fixed.vertical,
-            forced_width = 30,
+            spacing = 2,
+            layout = wibox.layout.fixed.horizontal,
             valign = "center",
             align = "center",
         },
@@ -199,98 +200,107 @@ awful.screen.connect_for_each_screen(function(s)
         screen = s,
         filter = awful.widget.tasklist.filter.currenttags,
         buttons = tasklist_buttons,
-        layout = {
-            spacing = 8,
-            -- forced_num_cols = 1,
-            layout = wibox.layout.grid.vertical,
-        },
-        widget_template = {
-            {
-                {
-                    id = 'clienticon',
-                    widget = awful.widget.clienticon,
-                },
-                margins = 3,
-                widget = wibox.container.margin
-            },
-            id = 'background_role',
-            forced_width = 36,
-            forced_height = 36,
-            widget = wibox.container.background,
-            create_callback = function(self, c)
-                self:get_children_by_id('clienticon')[1].client = c
-                local tooltip = awful.tooltip({
-                    objects = { self },
-                    timer_function = function()
-                        return c.name
-                    end,
-                    delay_show = 0.5
-                })
-                tooltip.mode = "outside"
-            end,
+      })
+        -- layout = {
+        --     spacing = 8,
+        --     -- forced_num_cols = 1,
+        --     layout = wibox.layout.grid.horizontal,
+        -- },
+        -- widget_template = {
+        --     {
+        --         {
+        --             id = 'clienticon',
+        --             widget = awful.widget.clienticon,
+        --         },
+        --         margins = 3,
+        --         widget = wibox.container.margin
+        --     },
+        --     id = 'background_role',
+        --     forced_width = 36,
+        --     forced_height = 36,
+        --     widget = wibox.container.background,
+        --     create_callback = function(self, c)
+        --         self:get_children_by_id('clienticon')[1].client = c
+        --         local tooltip = awful.tooltip({
+        --             objects = { self },
+        --             timer_function = function()
+        --                 return c.name
+        --             end,
+        --             delay_show = 0.5
+        --         })
+        --         tooltip.mode = "outside"
+        --     end,
 
-      -- Then you can set tooltip props if required (should work as is)
-      -- tooltip.align = "left"
-      -- tooltip.mode = "outside"
-      -- tooltip.preferred_positions = {"left"}
-        },
-    })
+      -- -- Then you can set tooltip props if required (should work as is)
+      -- -- tooltip.align = "left"
+      -- -- tooltip.mode = "outside"
+      -- -- tooltip.preferred_positions = {"left"}
+        -- },
+    -- })
+
     -- s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
-    s.mywibox = awful.wibar({ position = "left", width = 40, screen = s })
+    s.mywibox = awful.wibar({ position = "top", height = 28, screen = s })
     s.mywibox:setup({
-        layout = wibox.layout.align.vertical,
+        layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.vertical,
             {
                 { widget = s.mytaglist },
-                top = 20,
-                bottom = 30,
+                left = 5,
+                right = 5,
                 widget = wibox.container.margin
             },
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
-            layout = wibox.layout.fixed.vertical,
+            layout = wibox.layout.fixed.horizontal,
             {
-                { widget = batterywidget },
-                top = 10,
-                bottom = 10,
+                { widget = kbdcfg.widget },
+                left = 5,
+                right = 5,
                 widget = wibox.container.margin
             },
             {
-                { widget = kbdcfg.widget },
-                margins = 4,
-                widget = wibox.container.margin
+                power,
+                left = 2,
+                right = 4,
+                top = 2,
+                bottom = 4,
+                widget = wibox.container.margin,
+            },
+            {
+                pulse,
+                left = 4,
+                right = 4,
+                top = 2,
+                bottom = 4,
+                widget = wibox.container.margin,
+            },
+            {
+                connman,
+                left = 4,
+                top = 2,
+                bottom = 4,
+                widget = wibox.container.margin,
             },
             wibox.widget.systray(),
             {
-                { widget = hours },
-                top = 10,
-                widget = wibox.container.margin
-            },
-            {
-                { widget = separator_clock },
-                left = 12,
-                right = 13,
-                widget = wibox.container.margin
-            },
-            {
-                { widget = minutes },
-                bottom = 10,
-                widget = wibox.container.margin
-            },
-            {
-                { widget = apw },
-                top = 10,
-                bottom = 10,
-                widget = wibox.container.margin
+                {
+                    { widget = clock },
+                    fg = beautiful.yellow,
+                    widget = wibox.container.background,
+                },
+                left = 20,
+                right = 15,
+                bottom = 2,
+                widget = wibox.container.margin,
             },
             s.mylayoutbox,
         },
     })
 end)
--- }}}
--- Mouse bindings {{{
+
+-- Mouse bindings {{{1
 root.buttons(awful.util.table.join(
     awful.button({ }, 3, function () mymainmenu:toggle() end)
 ))
@@ -302,8 +312,8 @@ local clientbuttons = awful.util.table.join(
     awful.button({ }, 3, function () mymainmenu:hide() end),
     awful.button({ modkey }, 3, awful.mouse.client.resize)
 )
--- }}}
--- Key bindings {{{
+
+-- Key bindings {{{1
 local globalkeys = awful.util.table.join(
 
     awful.key({ modkey, }, "s", hotkeys_popup.show_help,
@@ -312,11 +322,11 @@ local globalkeys = awful.util.table.join(
     awful.key({ modkey, }, "space", function () kbdcfg.switch() end),
 
     -- Volume control keys
-    awful.key({ }, "XF86AudioRaiseVolume", apw.up ),
-    awful.key({ }, "XF86AudioLowerVolume", apw.down ),
-    awful.key({ modkey }, "Up", apw.up ),
-    awful.key({ modkey }, "Down", apw.down ),
-    awful.key({ }, "XF86AudioMute", apw.toggle_mute ),
+    -- awful.key({ }, "XF86AudioRaiseVolume", apw.up ),
+    -- awful.key({ }, "XF86AudioLowerVolume", apw.down ),
+    -- awful.key({ modkey }, "Up", apw.up ),
+    -- awful.key({ modkey }, "Down", apw.down ),
+    -- awful.key({ }, "XF86AudioMute", apw.toggle_mute ),
 
     -- Switch tags
     awful.key({ modkey }, "Left", awful.tag.viewprev,
@@ -373,7 +383,7 @@ local globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift" }, "space", function () awful.layout.inc(1) end,
               {description = "select next", group = "layout"}),
 
-    awful.key({ modkey, "Control" }, "n",
+    awful.key({ modkey, "Shift" }, "n",
               function ()
                   local c = awful.client.restore()
                   if c then
@@ -415,11 +425,8 @@ local clientkeys = awful.util.table.join(
               {description = "move to screen", group = "client"}),
     awful.key({ modkey }, "t", function (c) c.ontop = not c.ontop end,
               {description = "toggle keep on top", group = "client"}),
-    awful.key({ modkey }, "n",
-        function (c)
-            c.minimized = true
-        end ,
-        {description = "minimize", group = "client"}),
+    awful.key({ modkey }, "n", function (c) c.minimized = true end,
+              {description = "minimize", group = "client"}),
     awful.key({ modkey }, "m",
         function (c)
             if c.maximized then
@@ -440,11 +447,11 @@ for i = 1, 4 do
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,
                   function ()
-                        local screen = awful.screen.focused()
-                        local tag = screen.tags[i]
-                        if tag then
-                           tag:view_only()
-                        end
+                      local screen = awful.screen.focused()
+                      local tag = screen.tags[i]
+                      if tag then
+                          tag:view_only()
+                      end
                   end,
                   {description = "view tag #"..i, group = "tag"}),
         -- Toggle tag display.
@@ -484,58 +491,75 @@ end
 
 -- Set keys
 root.keys(globalkeys)
--- }}}
--- Rules {{{
+
+-- Rules {{{1
 awful.rules.rules = {
-    { rule = { },
-      properties = { border_width = beautiful.border_width,
-                     border_color = beautiful.border_normal,
-                     size_hints_honor = false,
-                     focus = awful.client.focus.filter,
-                     raise = true,
-                     keys = clientkeys,
-                     screen = awful.screen.preferred,
-                     placement = awful.placement.no_overlap+awful.placement.no_offscreen,
-                     buttons = clientbuttons }
+    {
+        rule = { },
+        properties = {
+          border_width = beautiful.border_width,
+          border_color = beautiful.border_normal,
+          size_hints_honor = false,
+          focus = awful.client.focus.filter,
+          raise = true,
+          keys = clientkeys,
+          screen = awful.screen.preferred,
+          placement = awful.placement.no_overlap+awful.placement.no_offscreen,
+          buttons = clientbuttons
+      },
     },
-    { rule_any = {
-        class = {
-          "mpv",
-          terminal,
-          "Zathura",
-          "Sxiv",
-          "Opera",
-          "Emacs",
+
+    {
+        rule_any = {
+            class = {
+                "mpv",
+                "st-256color",
+                "Zathura",
+                "Sxiv",
+                "Opera",
+            },
         },
-      }, properties = { maximized = true }},
-    { rule_any = {
-        class = {
-          "Blender"
+        properties = { maximized = true },
+    },
+
+    {
+        rule_any = {
+            class = {
+                "Blender"
+            },
         },
-      }, properties = { maximized = true, floating = true }},
-    { rule_any = {
-        class = {
-          "Gpick",
-          "Git-gui--askpass",
-          "Lxappearance",
-          "Pavucontrol",
-          "Gcr-prompter",
-          "Gimp"
+        properties = { maximized = true, floating = true }
+    },
+
+    {
+        rule_any = {
+            class = {
+                "Gpick",
+                "Git-gui--askpass",
+                "Lxappearance",
+                "Pavucontrol",
+                "Gcr-prompter",
+                "Gimp"
+            },
+            type = {
+                "dialog",
+            },
+            role = {
+                "pop-up",
+            }
         },
-        type = {
-          "dialog",
-        },
-        role = {
-          "pop-up",
-        }
-      }, properties = { floating = true },
-         callback = function (c) awful.placement.centered(c, nil) end },
+        properties = { floating = true },
+        callback = function (c)
+            awful.placement.centered(c, nil)
+        end,
+    },
 }
--- }}}
--- Signals {{{
+
+-- Signals {{{1
 client.connect_signal("manage", function (c)
-    if awesome.startup and not c.size_hints.user_position
-                       and not c.size_hints.program_position then
+    if awesome.startup and
+            not c.size_hints.user_position and
+            not c.size_hints.program_position then
         awful.placement.no_offscreen(c)
     end
 end)
@@ -557,6 +581,5 @@ client.connect_signal("unfocus", function(c)
         c.border_width = beautiful.border_width
     end
 end)
--- }}}
 
 -- vim:foldmethod=marker
