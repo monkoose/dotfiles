@@ -1,6 +1,5 @@
 local dpi = require("beautiful.xresources").apply_dpi
 local dir = "~/.config/awesome/themes/boa/"
-local icons = dir .. "icons/"
 local layouts = dir .. "layouts/"
 
 local fonts = {
@@ -18,10 +17,8 @@ local colors = {
 }
 
 return {
-    english             = icons .. "english.png",
-    russian             = icons .. "russian.png",
     font                = fonts.sans .. " 12",
-    clock               = fonts.mono .. " 16",
+    clock_font          = fonts.mono .. " 16",
 
     grey                = colors.grey,
     black               = colors.black,

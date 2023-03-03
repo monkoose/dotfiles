@@ -47,6 +47,8 @@ end
 -- Variable definitions {{{1
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init("~/.config/awesome/themes/boa/theme.lua")
+local theme_assets = require("beautiful.theme_assets")
+theme_assets.recolor_layout(beautiful, beautiful.yellow)
 
 -- This is used later as default programs.
 local filemanager = "pcmanfm"
@@ -82,17 +84,27 @@ local mymainmenu = awful.menu({
 
 -- Widgets {{{1
 
-local power = require('widgets.power')
-local pulse = require("widgets.pulseaudio")
-local connman = require("widgets.connman")
+local power = wibox.container.margin(require('widgets.power'), 0, 4, 2, 4)
+local pulse = wibox.container.margin(require("widgets.pulseaudio"), 4, 0, 2, 4)
+local connman = wibox.container.margin(require("widgets.connman"), 8, 0, 2, 4)
 
 -- Clock
 local clock = wibox.widget({
-    format = "%H:%M",
-    font = beautiful.clock,
-    align = "center",
-    refresh = 60,
-    widget = wibox.widget.textclock
+    {
+        {
+            format = "%H:%M",
+            font = beautiful.clock_font,
+            align = "center",
+            refresh = 60,
+            widget = wibox.widget.textclock
+        },
+        fg = beautiful.yellow,
+        widget = wibox.container.background,
+    },
+    left = 20,
+    right = 15,
+    bottom = 2,
+    widget = wibox.container.margin,
 })
 
 local clock_tooltip = awful.tooltip({
@@ -104,36 +116,31 @@ local clock_tooltip = awful.tooltip({
 })
 clock_tooltip:set_text(os.date('%d %B %Y\n%A'))
 
--- Keyboard map indicator and changer
-local kbdcfg = {
-    cmd = "setxkbmap ",
-    widget = wibox.widget({
-        image = beautiful.english,
-        widget = wibox.widget.imagebox,
-        align = "center",
-        valign = "center",
+-- Keyboard layout switcher
+local function switch_kbd_layout()
+    local lang_nexts = setmetatable({ us = "ru", ru = "us" }, {
+        __index = function() return "us" end,
     })
-}
 
-kbdcfg.switch = function()
-    local us, ru = "us", "ru"
-    local f = io.popen(kbdcfg.cmd .. "-query | grep layout")
-    if not f then return end
-
-    local is_us = string.find(f:read("*l"), "us")
-    f:close()
-
-    if is_us then
-        kbdcfg.widget.image = beautiful.russian
-        os.execute(kbdcfg.cmd .. ru)
-    else
-        kbdcfg.widget.image = beautiful.english
-        os.execute(kbdcfg.cmd .. us)
-    end
+    awful.spawn.easy_async_with_shell("setxkbmap -query | grep '^layout'", function(out)
+        local curr_lang = string.match(out, "%s*(%a*)", 8)
+        awful.spawn.with_shell("setxkbmap " .. lang_nexts[curr_lang])
+    end)
 end
 
-kbdcfg.widget:buttons(awful.util.table.join(
-    awful.button({ }, 1, function () kbdcfg.switch() end))
+local function keyboardlayout_with_font(font)
+    local result = awful.widget.keyboardlayout()
+    result.widget.font = font
+    return result
+end
+
+local mykeyboardlayout = wibox.widget({
+    keyboardlayout_with_font(beautiful.clock_font),
+    fg = beautiful.yellow,
+    widget = wibox.container.background,
+})
+mykeyboardlayout:buttons(awful.util.table.join(
+awful.button({ }, 1, function () switch_kbd_layout() end))
 )
 
 -- Wibox {{{1
@@ -175,14 +182,14 @@ local tasklist_buttons = awful.util.table.join(
 
 awful.screen.connect_for_each_screen(function(s)
     awful.tag({ " 1", " 2", " 3", " 4" }, s, awful.layout.layouts[1])
-    s.mylayoutbox = wibox.container.margin(awful.widget.layoutbox(s))
-    s.mylayoutbox.margins = 3
+
+    s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(awful.util.table.join(
-    awful.button({ }, 1, function () awful.layout.inc( 1) end),
-    awful.button({ }, 3, function () awful.layout.inc(-1) end),
-    awful.button({ }, 4, function () awful.layout.inc( 1) end),
-    awful.button({ }, 5, function () awful.layout.inc(-1) end)
-    ))
+        awful.button({ }, 1, function () awful.layout.inc( 1) end),
+        awful.button({ }, 3, function () awful.layout.inc(-1) end),
+        awful.button({ }, 4, function () awful.layout.inc( 1) end),
+        awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+
     s.mytaglist = awful.widget.taglist({
         screen = s,
         filter = awful.widget.taglist.filter.all,
@@ -194,6 +201,7 @@ awful.screen.connect_for_each_screen(function(s)
             align = "center",
         },
     })
+
     s.mytasklist = awful.widget.tasklist({
         screen = s,
         filter = awful.widget.tasklist.filter.currenttags,
@@ -233,64 +241,18 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            {
-                { widget = s.mytaglist },
-                left = 5,
-                right = 8,
-                widget = wibox.container.margin
-            },
+            wibox.container.margin(s.mytaglist, 5, 8)
         },
         s.mytasklist,
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            {
-                { widget = kbdcfg.widget },
-                left = 12,
-                right = 5,
-                widget = wibox.container.margin
-            },
-            {
-                power,
-                left = 2,
-                right = 4,
-                top = 2,
-                bottom = 4,
-                widget = wibox.container.margin,
-            },
-            {
-                pulse,
-                left = 4,
-                top = 2,
-                bottom = 4,
-                widget = wibox.container.margin,
-            },
-            {
-                connman,
-                left = 8,
-                top = 2,
-                bottom = 4,
-                widget = wibox.container.margin,
-            },
-            {
-                wibox.widget.systray(),
-                left = 2,
-                right = 2,
-                top = 2,
-                bottom = 4,
-                widget = wibox.container.margin,
-            },
-            {
-                {
-                    { widget = clock },
-                    fg = beautiful.yellow,
-                    widget = wibox.container.background,
-                },
-                left = 20,
-                right = 15,
-                bottom = 2,
-                widget = wibox.container.margin,
-            },
-            s.mylayoutbox,
+            wibox.container.margin(mykeyboardlayout, 4, 0, 0, 4),
+            power,
+            pulse,
+            connman,
+            wibox.container.margin(wibox.widget.systray(), 2, 2, 2, 4),
+            clock,
+            wibox.container.margin(s.mylayoutbox, 3, 3, 2, 4)
         },
     })
 end)
@@ -314,7 +276,7 @@ local globalkeys = awful.util.table.join(
     awful.key({ modkey, }, "s", hotkeys_popup.show_help,
               {description = "show help", group = "awesome"}),
     -- Switch the current keyboard layout
-    awful.key({ modkey, }, "space", function () kbdcfg.switch() end),
+    awful.key({ modkey, }, "space", function () switch_kbd_layout() end),
 
     -- Volume control keys
     -- awful.key({ }, "XF86AudioRaiseVolume", apw.up ),
