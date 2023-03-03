@@ -53,7 +53,10 @@ return {
     taglist_fg_urgent   = colors.red,
     taglist_fg_focus    = colors.yellow,
     taglist_font        = fonts.mono .. " Bold 16",
-    tasklist_bg_focus   = colors.grey,
+
+    tasklist_bg_focus  = colors.yellow,
+    tasklist_bg_normal = colors.grey,
+    tasklist_fg_urgent = colors.red,
 
     menu_height         = dpi(40),
     menu_width          = dpi(190),

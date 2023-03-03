@@ -19,6 +19,7 @@
 local wibox = require("wibox")
 local awful = require("awful")
 local naughty = require("naughty")
+local gears = require("gears")
 
 local lgi = require('lgi')
 local icon_theme = lgi.Gtk.IconTheme.get_default()
@@ -64,7 +65,7 @@ local function update_icon(widget)
   )
 
   if icon then
-    widget.image = icon:load_surface()
+    widget.image = gears.color.recolor_image(icon:load_surface(), "#b19a71")
   end
 end
 

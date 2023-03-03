@@ -41,7 +41,7 @@ end
 
 local function load_icon(icon)
     if icon ~= nil then
-        return icon:load_surface()
+        return gears.color.recolor_image(icon:load_surface(), "#b19a71")
     end
 end
 

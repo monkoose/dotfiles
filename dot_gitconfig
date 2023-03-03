@@ -1,9 +1,22 @@
 [core]
-	excludesfile = /home/monkoose/.gitignore
+    excludesfile = /home/monkoose/.gitignore
+    pager = delta
 [user]
-	email = monkoose@protonmail.com
-	name = monkoose
+    email = monkoose@protonmail.com
+    name = monkoose
+[delta]
+    navigate = true
+    light = false
 [init]
-	defaultBranch = main
+    defaultBranch = main
 [credential]
-	helper = /usr/lib/git-core/git-credential-gnome-keyring
+    helper = /usr/lib/git-core/git-credential-gnome-keyring
+
+[interactive]
+    diffFilter = delta --color-only
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default

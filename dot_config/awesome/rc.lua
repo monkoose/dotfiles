@@ -157,7 +157,7 @@ local taglist_buttons = awful.util.table.join(
 local tasklist_buttons = awful.util.table.join(
     awful.button({ }, 1, function (c)
         if c == client.focus then
-            c.minimized = true
+            -- c.minimized = true
         else
             c.minimized = false
             if not c:isvisible() and c.first_tag then
@@ -168,22 +168,20 @@ local tasklist_buttons = awful.util.table.join(
         end
     end),
     awful.button({ }, 2, function (c) c:kill() end),
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
-    awful.button({ }, 4, function () awful.client.focus.byidx(1) end),
-    awful.button({ }, 5, function () awful.client.focus.byidx(-1) end)
+    awful.button({ }, 3, function () mymainmenu:toggle() end)
+    -- awful.button({ }, 4, function () awful.client.focus.byidx(1) end),
+    -- awful.button({ }, 5, function () awful.client.focus.byidx(-1) end)
 )
 
 awful.screen.connect_for_each_screen(function(s)
-    -- set_wallpaper(s)
-
     awful.tag({ " 1", " 2", " 3", " 4" }, s, awful.layout.layouts[1])
     s.mylayoutbox = wibox.container.margin(awful.widget.layoutbox(s))
     s.mylayoutbox.margins = 3
     s.mylayoutbox:buttons(awful.util.table.join(
-        awful.button({ }, 1, function () awful.layout.inc( 1) end),
-        awful.button({ }, 3, function () awful.layout.inc(-1) end),
-        awful.button({ }, 4, function () awful.layout.inc( 1) end),
-        awful.button({ }, 5, function () awful.layout.inc(-1) end)
+    awful.button({ }, 1, function () awful.layout.inc( 1) end),
+    awful.button({ }, 3, function () awful.layout.inc(-1) end),
+    awful.button({ }, 4, function () awful.layout.inc( 1) end),
+    awful.button({ }, 5, function () awful.layout.inc(-1) end)
     ))
     s.mytaglist = awful.widget.taglist({
         screen = s,
@@ -200,63 +198,54 @@ awful.screen.connect_for_each_screen(function(s)
         screen = s,
         filter = awful.widget.tasklist.filter.currenttags,
         buttons = tasklist_buttons,
-      })
-        -- layout = {
-        --     spacing = 8,
-        --     -- forced_num_cols = 1,
-        --     layout = wibox.layout.grid.horizontal,
-        -- },
-        -- widget_template = {
-        --     {
-        --         {
-        --             id = 'clienticon',
-        --             widget = awful.widget.clienticon,
-        --         },
-        --         margins = 3,
-        --         widget = wibox.container.margin
-        --     },
-        --     id = 'background_role',
-        --     forced_width = 36,
-        --     forced_height = 36,
-        --     widget = wibox.container.background,
-        --     create_callback = function(self, c)
-        --         self:get_children_by_id('clienticon')[1].client = c
-        --         local tooltip = awful.tooltip({
-        --             objects = { self },
-        --             timer_function = function()
-        --                 return c.name
-        --             end,
-        --             delay_show = 0.5
-        --         })
-        --         tooltip.mode = "outside"
-        --     end,
+        layout = {
+            spacing = 10,
+            layout = wibox.layout.flex.horizontal,
+        },
+        widget_template = {
+            {
+                wibox.widget.base.make_widget(),
+                forced_height = 1,
+                id            = 'background_role',
+                widget        = wibox.container.background,
+            },
+            {
+                {
+                    {
+                        id     = 'icon_role',
+                        widget = wibox.widget.imagebox,
+                    },
+                    margins = 2,
+                    widget = wibox.container.margin,
+                },
+                {
+                    id     = 'text_role',
+                    widget = wibox.widget.textbox,
+                },
+                layout = wibox.layout.align.horizontal,
+            },
+            layout = wibox.layout.align.vertical,
+        },
+    })
 
-      -- -- Then you can set tooltip props if required (should work as is)
-      -- -- tooltip.align = "left"
-      -- -- tooltip.mode = "outside"
-      -- -- tooltip.preferred_positions = {"left"}
-        -- },
-    -- })
-
-    -- s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
     s.mywibox = awful.wibar({ position = "top", height = 28, screen = s })
     s.mywibox:setup({
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
-            layout = wibox.layout.fixed.vertical,
+            layout = wibox.layout.fixed.horizontal,
             {
                 { widget = s.mytaglist },
                 left = 5,
-                right = 5,
+                right = 8,
                 widget = wibox.container.margin
             },
         },
-        s.mytasklist, -- Middle widget
+        s.mytasklist,
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             {
                 { widget = kbdcfg.widget },
-                left = 5,
+                left = 12,
                 right = 5,
                 widget = wibox.container.margin
             },
@@ -271,19 +260,25 @@ awful.screen.connect_for_each_screen(function(s)
             {
                 pulse,
                 left = 4,
-                right = 4,
                 top = 2,
                 bottom = 4,
                 widget = wibox.container.margin,
             },
             {
                 connman,
-                left = 4,
+                left = 8,
                 top = 2,
                 bottom = 4,
                 widget = wibox.container.margin,
             },
-            wibox.widget.systray(),
+            {
+                wibox.widget.systray(),
+                left = 2,
+                right = 2,
+                top = 2,
+                bottom = 4,
+                widget = wibox.container.margin,
+            },
             {
                 {
                     { widget = clock },

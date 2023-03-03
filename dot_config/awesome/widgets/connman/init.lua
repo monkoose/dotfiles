@@ -20,6 +20,7 @@ local string = string
 -- Connman network widget
 local awful = require("awful")
 local wibox = require("wibox")
+local gears = require("gears")
 
 local lgi = require('lgi')
 local icon_theme = lgi.Gtk.IconTheme.get_default()
@@ -114,7 +115,7 @@ local function get_icon(name)
       icon_flags
     )
     if icon then
-      return icon:load_surface()
+      return gears.color.recolor_image(icon:load_surface(), "#b19a71")
     end
   end
 end
