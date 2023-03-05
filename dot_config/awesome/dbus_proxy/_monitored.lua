@@ -22,7 +22,8 @@ local lgi = require("lgi")
 local Gio = lgi.Gio
 local GObject = lgi.GObject
 
-local Proxy = require("dbus_proxy._proxy")
+local req_path = string.match(..., "(.*)%..*$")
+local Proxy = require(req_path .. "._proxy")
 
 local monitored = {}
 

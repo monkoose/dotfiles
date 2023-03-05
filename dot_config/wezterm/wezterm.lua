@@ -1,23 +1,34 @@
 local wezterm = require('wezterm')
 local act = wezterm.action
+local home = os.getenv('HOME')
 
 return {
   enable_tab_bar = false,
-  scrollback_lines = 3000,
+  scrollback_lines = 1000,
   font = wezterm.font_with_fallback {
     'Iosevka Monkoose',
-    'Iosevka Nerd Font',
+    'IosevkaTerm Nerd Font Mono',
   },
-  font_size = 15,
+  font_dirs = { home .. '/.fonts' },
+  font_locator = 'ConfigDirsOnly',
+  font_size = 13,
+  freetype_load_target = 'HorizontalLcd',
   freetype_load_flags = 'NO_AUTOHINT|MONOCHROME',
-  term = 'wezterm',
-  initial_rows = 40,
-  initial_cols = 200,
+  harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
+  cursor_thickness = 2,
+  automatically_reload_config = false,
+  quick_select_alphabet = 'fjdklsaeghiowrucm',
+  max_fps = 120,
+  underline_position = -3,
+  use_ime = false,
+  -- term = 'wezterm',
+  initial_rows = 33,
+  initial_cols = 151,
   window_padding = {
-    left = 3,
-    right = 3,
-    top = 8,
-    bottom = 3,
+    left = 1,
+    right = 1,
+    top = 6,
+    bottom = 2,
   },
 
   colors = {
@@ -27,7 +38,7 @@ return {
     cursor_fg = '201b17',
     cursor_border = '#d02a61',
     selection_fg = 'none',
-    selection_bg = '302c29',
+    selection_bg = '483c19',
     ansi = {
       '#110e0d',
       '#d35b4b',
@@ -64,6 +75,7 @@ return {
     { mods = 'CTRL|SHIFT', key = 'l', action = act.ClearScrollback('ScrollbackAndViewport') },
     { mods = 'CTRL|SHIFT', key = 'k', action = act.ScrollByPage(-0.5) },
     { mods = 'CTRL|SHIFT', key = 'j', action = act.ScrollByPage(0.5) },
+    { mods = 'CTRL|SHIFT', key = 'r', action = act.ReloadConfiguration },
   },
 
   key_tables = {

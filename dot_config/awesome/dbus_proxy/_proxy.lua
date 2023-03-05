@@ -31,7 +31,8 @@ local GVariant = lgi.GLib.Variant
 
 local _DEFAULT_TIMEOUT = -1
 
-local variant = require("dbus_proxy._variant")
+local req_path = string.match(..., "(.*)%..*$")
+local variant = require(req_path .. "._variant")
 
 --[[-- A proxy object
 

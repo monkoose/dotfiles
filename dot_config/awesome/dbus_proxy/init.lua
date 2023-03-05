@@ -25,10 +25,11 @@
   @module dbus_proxy
 ]]
 
-local Bus = require("dbus_proxy._bus")
-local Proxy = require("dbus_proxy._proxy")
-local variant = require("dbus_proxy._variant")
-local monitored = require("dbus_proxy._monitored")
+local req_path = ...
+local Bus = require(req_path .. "._bus")
+local Proxy = require(req_path .. "._proxy")
+local variant = require(req_path .. "._variant")
+local monitored = require(req_path .. "._monitored")
 
 return {
   Proxy = Proxy,

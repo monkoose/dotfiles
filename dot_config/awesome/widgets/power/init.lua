@@ -25,7 +25,8 @@ local lgi = require('lgi')
 local icon_theme = lgi.Gtk.IconTheme.get_default()
 local IconLookupFlags = lgi.Gtk.IconLookupFlags
 
-local power = require("widgets.power.upower_dbus")
+local req_path = ...
+local power = require(req_path .. ".upower_dbus")
 local WarningLevel = power.enums.BatteryWarningLevel
 
 local math = math

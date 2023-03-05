@@ -26,7 +26,8 @@ local gears = require("gears")
 local wibox = require("wibox")
 local naughty = require("naughty")
 
-local pulse = require("widgets.pulseaudio.pulseaudio_dbus")
+local req_path = ...
+local pulse = require(req_path .. ".pulseaudio_dbus")
 
 local lgi = require('lgi')
 local icon_theme = lgi.Gtk.IconTheme.get_default()

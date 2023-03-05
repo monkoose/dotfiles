@@ -36,8 +36,9 @@ local table = table
 local GVariant = require("lgi").GLib.Variant
 local proxy = require("dbus_proxy")
 
-local _Service = require("widgets.connman.connman_dbus._service")
-local _Technology = require("widgets.connman.connman_dbus._technology")
+local req_path = ...
+local _Service = require(req_path .. "._service")
+local _Technology = require(req_path .. "._technology")
 
 local _prototypes = {
   Service = {__index = _Service},

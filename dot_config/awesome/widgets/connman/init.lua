@@ -1,5 +1,6 @@
 --[[
   Copyright 2016-2019 Stefano Mazzucco <stefano AT curso DOT re>
+  Copyright 2023 monkoose
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -26,7 +27,8 @@ local lgi = require('lgi')
 local icon_theme = lgi.Gtk.IconTheme.get_default()
 local IconLookupFlags = lgi.Gtk.IconLookupFlags
 
-local ConnectionManager = require("widgets.connman.connman_dbus")
+local req_path = ...
+local ConnectionManager = require(req_path .. ".connman_dbus")
 
 local function default_table(t, default_value)
   t = t or {}
@@ -184,7 +186,15 @@ local widget = wibox.widget {
   widget = wibox.widget.imagebox
 }
 
-widget.tooltip = awful.tooltip({ objects = { widget },})
+widget.tooltip = awful.tooltip({
+    objects = { widget },
+    delay_show = 0.2,
+    margins_leftright = 10,
+    margins_topbottom = 6,
+    mode = "outside",
+    preferred_alignments = "middle",
+    ontop = true,
+})
 widget.gui_client = ""
 
 function widget:update_tooltip(manager)
