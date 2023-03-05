@@ -13,6 +13,11 @@ fi
 # xset -dpms &
 # xset s off &
 # xset -b &
+
+# Set background color
 xsetroot -solid "#413e33"
+
+# Hide cursor
+unclutter --fork --timeout=3 --jitter=3 --exclude-root
 
 exec awesome -a
