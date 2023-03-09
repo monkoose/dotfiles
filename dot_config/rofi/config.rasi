@@ -1,11 +1,11 @@
 configuration {
-  modi: "run,window,drun";
+  modi: "run,window";
   font: "Iosevka Monkoose 16";
   /* show-icons: true; */
   /* icon-theme: ; */
   terminal: "st";
   no-plugins: true;
-  sidebar-mode: true;
+  /* sidebar-mode: true; */
   drun-match-fields: "name,generic,exec";
   combi-modi: "drun,run";
   kb-accept-entry: "Control+l,Return";

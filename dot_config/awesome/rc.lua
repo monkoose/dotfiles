@@ -52,7 +52,7 @@ theme_assets.recolor_layout(beautiful, beautiful.yellow)
 
 -- This is used later as default programs.
 local filemanager = "pcmanfm"
-local rofi = "rofi -show run"
+local launcher = "rofi -show run"
 local rofi_win = "rofi -show window"
 local terminal = "st"
 local browser = os.getenv("BROWSER")
@@ -359,8 +359,8 @@ local globalkeys = awful.util.table.join(
         end),
     awful.key({ modkey, "Shift" }, "r", function () mymainmenu:show() end,
               {description = "show main menu", group = "awesome"}),
-    awful.key({ modkey }, "r", function() awful.spawn(rofi) end,
-              {description = "launch rofi", group = "launcher"}),
+    awful.key({ modkey }, "r", function() awful.spawn(launcher) end,
+              {description = "open launcher", group = "launcher"}),
     awful.key({ modkey }, "w", function() awful.spawn(rofi_win) end,
               {description = "launch rofi_win", group = "launcher"})
 )
@@ -473,7 +473,7 @@ awful.rules.rules = {
                 "st-256color",
                 "Zathura",
                 "Sxiv",
-                "Opera",
+                "Vivaldi-stable",
             },
         },
         properties = { maximized = true },
