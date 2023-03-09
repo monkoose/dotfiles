@@ -88,5 +88,6 @@ map D delete
 map E vim-cd
 map a extract
 map <a-1> quit
+map x $$f
 
 # vim: ft=conf
