@@ -1,0 +1,2 @@
+--regex-vim=/^\s*final\s+(\S+)(:\s+\S+)?\s+=\s*.*$/\1/C,constant,definitions/
+--regex-vim=/^\s*var\s+(\S+)(:\s+\S+)?\s+=\s*.*$/\1/v,variable,definitions/

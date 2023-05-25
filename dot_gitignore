@@ -5,3 +5,10 @@
 **/node_modules/
 
 **/.git/
+
+ncscope.out.temp
+cscope.out
+cscope.files
+cscope.out.*
+tags
+tags.files
