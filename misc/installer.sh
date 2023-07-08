@@ -1,16 +1,15 @@
 #!/usr/bin/env bash
 
-install_if_not() {
+install_if_needed() {
     yay -Qi "$1" &>/dev/null || yay -S "$1"
 }
 
-scriptpath=$(chezmoi source-path)
-# scriptpath=$(dirname $(realpath "$0"))
+scriptpath=$(dirname $(realpath "$0"))
 cd "$scriptpath"
 
 # Remove tearing for amdgpu driver
 mkdir -p /etc/X11/xorg.conf.d
-cp misc/xorg/20-amdgpu.conf $_
+cp xorg/20-amdgpu.conf $_
 
 # AMD Gpu fan speed by temperature
 install_if_needed amdfand-bin
@@ -24,7 +23,7 @@ cp keyd/all.conf $_
 # Install vim with custom features
 git clone https://github.com/vim/vim.git vim-repo
 cd vim-repo
-git apply misc/vim/git-patch.patch
+git apply ../vim/git-patch.patch
 make reconfig && make install
 cd "$scriptpath" && rm -rf vim-repo
 
