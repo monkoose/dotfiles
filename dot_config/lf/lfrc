@@ -22,8 +22,8 @@ cmd open &{{
     esac
 }}
 
-cmd delete %trash-put $fx
-cmd trash-restore $trash-restore
+cmd delete %trash $fx
+cmd trash-restore $printf '\nTrash contains:\n' && rlwrap trash-restore
 cmd trash-empty %trash-empty -f
 cmd trash-list !trash-list
 

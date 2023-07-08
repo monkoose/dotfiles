@@ -16,8 +16,6 @@ SETUVAR --export PAGER:less
 SETUVAR --export QT_QPA_PLATFORMTHEME:qt6ct
 SETUVAR --export VIEWER:vim
 SETUVAR __fish_initialized:3400
-SETUVAR _fish_abbr_bright_2D_low:xrandr\x20\x2d\x2doutput\x20eDP\x2d1\x20\x2d\x2dbrightness\x200\x2e6\x20\x2d\x2dgamma\x201\x3a1\x3a0\x2e8
-SETUVAR _fish_abbr_bright_2D_norm:xrandr\x20\x2d\x2doutput\x20eDP\x2d1\x20\x2d\x2dbrightness\x201\x20\x2d\x2dgamma\x201\x3a1\x3a1
 SETUVAR fish_color_autosuggestion:5a4b38
 SETUVAR fish_color_cancel:red\x1e\x2d\x2dbold
 SETUVAR fish_color_command:719e44\x1e\x2d\x2dbold

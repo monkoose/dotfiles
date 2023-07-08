@@ -84,7 +84,7 @@ local mymainmenu = awful.menu({
 
 -- Widgets {{{1
 
-local power = wibox.container.margin(require('widgets.power'), 0, 4, 2, 4)
+-- local power = wibox.container.margin(require('widgets.power'), 0, 4, 2, 4)
 local pulse = wibox.container.margin(require("widgets.pulseaudio"), 4, 0, 2, 4)
 local connman = wibox.container.margin(require("widgets.connman"), 8, 0, 2, 4)
 
@@ -135,7 +135,7 @@ local function keyboardlayout_with_font(font)
 end
 
 local mykeyboardlayout = wibox.widget({
-    keyboardlayout_with_font(beautiful.clock_font),
+    keyboardlayout_with_font(beautiful.keyboardlayout_font),
     fg = beautiful.yellow,
     widget = wibox.container.background,
 })
@@ -236,7 +236,7 @@ awful.screen.connect_for_each_screen(function(s)
         },
     })
 
-    s.mywibox = awful.wibar({ position = "top", height = 28, screen = s })
+    s.mywibox = awful.wibar({ position = "top", height = 34, screen = s })
     s.mywibox:setup({
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
@@ -247,7 +247,7 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.container.margin(mykeyboardlayout, 4, 0, 0, 4),
-            power,
+            -- power,
             pulse,
             connman,
             wibox.container.margin(wibox.widget.systray(), 2, 2, 2, 4),

@@ -19,6 +19,7 @@ local colors = {
 return {
     font                = fonts.sans .. " 12",
     clock_font          = fonts.mono .. " 16",
+    keyboardlayout_font = fonts.mono .. " Bold 18",
 
     grey                = colors.grey,
     black               = colors.black,
