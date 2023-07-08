@@ -1,0 +1,79 @@
+diff --git a/src/Makefile b/src/Makefile
+index ea37ee178..4142d2c0f 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -318,7 +318,7 @@ CClink = $(CC)
+ # Uncomment this line when you don't want to get the GUI version, although you
+ # have GTK and/or Motif.  Also use --without-x if you don't want X11
+ # at all.
+-#CONF_OPT_GUI = --disable-gui
++CONF_OPT_GUI = --disable-gui
+ 
+ # Uncomment one of these lines if you have that GUI but don't want to use it.
+ # The automatic check will use another one that can be found.
+diff --git a/src/feature.h b/src/feature.h
+index ca180dd1f..fd7627f06 100644
+--- a/src/feature.h
++++ b/src/feature.h
+@@ -214,7 +214,7 @@
+  *			use it to keep supporting it.
+  */
+ #if defined(FEAT_HUGE) && !defined(DISABLE_RIGHTLEFT)
+-# define FEAT_RIGHTLEFT
++// # define FEAT_RIGHTLEFT
+ #endif
+ 
+ /*
+@@ -222,7 +222,7 @@
+  *			Requires FEAT_RIGHTLEFT
+  */
+ #if defined(FEAT_HUGE) && !defined(DISABLE_ARABIC)
+-# define FEAT_ARABIC
++// # define FEAT_ARABIC
+ #endif
+ #ifdef FEAT_ARABIC
+ # ifndef FEAT_RIGHTLEFT
+@@ -235,14 +235,14 @@
+  *			emacs style TAGS file.
+  */
+ #ifdef FEAT_HUGE
+-# define FEAT_EMACS_TAGS
++// # define FEAT_EMACS_TAGS
+ #endif
+ 
+ /*
+  * +cscope		Unix only: Cscope support.
+  */
+ #if defined(UNIX) && defined(FEAT_HUGE) && !defined(FEAT_CSCOPE) && !defined(MACOS_X)
+-# define FEAT_CSCOPE
++// # define FEAT_CSCOPE
+ #endif
+ 
+ /*
+@@ -298,7 +298,7 @@
+  */
+ #if defined(FEAT_NORMAL) && (defined(MSWIN) || defined(FEAT_EVAL)) \
+ 	&& !defined(AMIGA)
+-# define FEAT_PRINTER
++// # define FEAT_PRINTER
+ #endif
+ #if defined(FEAT_PRINTER) && ((defined(MSWIN) && defined(MSWINPS)) \
+ 	|| (!defined(MSWIN) && defined(FEAT_EVAL)))
+@@ -594,7 +594,7 @@
+  * +vartabs		'vartabstop' and 'varsofttabstop' options.
+  */
+ #ifdef FEAT_HUGE
+-# define FEAT_VARTABS
++// # define FEAT_VARTABS
+ #endif
+ 
+ /*
+@@ -820,7 +820,7 @@
+  * I'm assuming that any X11 implementation will cope with this for now.
+  */
+ #if defined(HAVE_X11) && defined(WANT_X11) && defined(HAVE_X11_SM_SMLIB_H)
+-# define USE_XSMP
++// # define USE_XSMP
+ #endif
+ #if defined(USE_XSMP_INTERACT) && !defined(USE_XSMP)
+ # undef USE_XSMP_INTERACT
