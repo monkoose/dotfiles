@@ -4,7 +4,8 @@ install_if_not() {
     yay -Qi "$1" &>/dev/null || yay -S "$1"
 }
 
-scriptpath=$(dirname $(realpath "$0"))
+scriptpath=$(chezmoi source-path)
+# scriptpath=$(dirname $(realpath "$0"))
 cd "$scriptpath"
 
 # Remove tearing for amdgpu driver
@@ -25,7 +26,7 @@ git clone https://github.com/vim/vim.git vim-repo
 cd vim-repo
 git apply misc/vim/git-patch.patch
 make reconfig && make install
-cd "$scriptpath"
+cd "$scriptpath" && rm -rf vim-repo
 
 ## Update `bat` cache so it can use custom theme
 install_if_needed bat
