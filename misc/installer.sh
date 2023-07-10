@@ -53,12 +53,19 @@ _userdirs() {
     xdg-user-dirs-update --set TEMPLATES $HOME/.local/share/Templates
 }
 
+_consolefont() {
+    install_if_needed tamsyn-font
+    sudo sh -c "echo 'FONT=Tamsyn10x20b' > /etc/vconsole.conf"
+}
+
 # main script
 config_funcs=(
     _amdgpu
     _keyd
     _bat
     _userdirs
+    _consolefont
+    _vim
 )
 
 for func in "${config_funcs[@]}"; do
