@@ -49,6 +49,14 @@ _bat() {
 ## xdg-user-dirs
 _userdirs() {
     install_if_needed xdg-user-dirs
+    mkdir -p $HOME/Documents
+    mkdir -p $HOME/Downloads
+    mkdir -p $HOME/Pictures
+    mkdir -p $HOME/Videos
+    mkdir -p $HOME/.local/share/Desktop
+    mkdir -p $HOME/.local/share/Music
+    mkdir -p $HOME/.local/share/Public
+    mkdir -p $HOME/.local/share/Templates
     xdg-user-dirs-update --set DOCUMENTS $HOME/Documents
     xdg-user-dirs-update --set DOWNLOAD $HOME/Downloads
     xdg-user-dirs-update --set PICTURES $HOME/Pictures
