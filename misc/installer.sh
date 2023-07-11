@@ -2,11 +2,11 @@
 set -eu -o pipefail
 IFS=$'\n\t'
 
-scriptpath=$(dirname $(realpath "$0"))
+scriptpath=$(dirname $(realpath $0))
 cd "$scriptpath"
 
 install_if_needed() {
-    yay -Qi "$1" &>/dev/null || yay -S "$1"
+    yay -Qi $1 &>/dev/null || yay -S $1
 }
 
 _amdgpu() {
@@ -31,7 +31,13 @@ _vim() {
     cd vim-repo
     git apply ../vim/git-patch.patch
     make reconfig && sudo make install
-    cd "$scriptpath" && rm -rf vim-repo
+    cd $scriptpath && rm -rf vim-repo
+}
+
+_st() {
+    cd st-terminal && makepkg -si
+    rm -rf pkg src *tar.gz *tar.zst
+    cd $scriptpath
 }
 
 ## Update `bat` cache so it can use custom theme
@@ -59,18 +65,24 @@ _consolefont() {
 }
 
 # main script
-config_funcs=(
+funcs=(
     _amdgpu
     _keyd
     _bat
     _userdirs
     _consolefont
+    _st
     _vim
 )
 
-for func in "${config_funcs[@]}"; do
-    echo "Running $func"
-    $func
-done
+if [[ $# -eq 0 ]]
+then
+    for func in "${funcs[@]}"; do
+        echo "Running $func"
+        $func
+    done
+else
+    (_$1)
+fi
 
 echo "Done."

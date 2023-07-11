@@ -1,0 +1,43 @@
+pkgname=st-terminal
+pkgver=0.9
+pkgrel=5
+pkgdesc='A simple virtual terminal emulator for X.'
+arch=('i686' 'x86_64' 'armv7h' 'aarch64')
+license=('MIT')
+depends=(libxft)
+url=https://st.suckless.org
+_sourcedir="st-$pkgver"
+source=(https://dl.suckless.org/st/$_sourcedir.tar.gz
+        st-boa-colorscheme-0.9.diff
+        st-color-underline-0.9.diff
+        st-scrollback-ringbuffer-0.9.diff
+        st-fix-buffer-overflow-0.9.diff)
+
+sha256sums=('f36359799734eae785becb374063f0be833cf22f88b4f169cd251b99324e08e7'
+            SKIP
+            SKIP
+            SKIP
+            SKIP)
+_makeopts="--directory=$_sourcedir"
+
+prepare() {
+  cd $srcdir/$_sourcedir
+  patch -i $srcdir/st-boa-colorscheme-0.9.diff
+  patch -i $srcdir/st-color-underline-0.9.diff
+  patch -i $srcdir/st-scrollback-ringbuffer-0.9.diff
+  patch -i $srcdir/st-fix-buffer-overflow-0.9.diff
+}
+
+build() {
+  make $_makeopts X11INC=/usr/include/X11 X11LIB=/usr/lib/X11
+}
+
+package() {
+  local installopts='--mode 0644 -D --target-directory '
+  local shrdir="$pkgdir/usr/share"
+  echo 'Pack done.'
+  make $_makeopts PREFIX=/usr DESTDIR="$pkgdir" install
+  install $installopts "$shrdir/licenses/$pkgname" "$_sourcedir/LICENSE"
+  install $installopts "$shrdir/doc/$pkgname" "$_sourcedir/README"
+  install $installopts "$shrdir/$pkgname" "$_sourcedir/st.info"
+}
