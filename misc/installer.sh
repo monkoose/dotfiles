@@ -35,7 +35,7 @@ _vim() {
 }
 
 _st() {
-    cd st-terminal && makepkg -si
+    cd st-terminal && makepkg -Csif
     rm -rf pkg src *tar.gz *tar.zst
     cd $scriptpath
 }
