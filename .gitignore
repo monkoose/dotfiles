@@ -1,0 +1,4 @@
+misc/st-terminal/pkg
+misc/st-terminal/src
+misc/st-terminal/*.tar.gz
+misc/st-terminal/*.tar.zst
