@@ -7,7 +7,7 @@ index 91ab8ca..0dff5f6 100644
   * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
   */
 -static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
-+static char *font = "JetBrains Mono:pixelsize=19:antialias=true:autohint=true";
++static char *font = "JetBrains Mono:pixelsize=20:antialias=true:autohint=true";
  static int borderpx = 2;
  
  /*
@@ -20,11 +20,14 @@ index 91ab8ca..0dff5f6 100644
  char *utmp = NULL;
  /* scroll program: to enable use a string like "scroll" */
  char *scroll = NULL;
-@@ -28,6 +28,6 @@ char *vtiden = "\033[?6c";
+@@ -28,6 +28,9 @@ char *vtiden = "\033[?6c";
  /* Kerning / character bounding-box multipliers */
  static float cwscale = 1.0;
 -static float chscale = 1.0;
-+static float chscale = 1.0;
++static float chscale = 0.95;
++/* Character rendering offsets in pixels */
++static short cxoffset = 0;
++static short cyoffset = -1;
  
  /*
   * word delimiter string
@@ -113,6 +116,17 @@ diff --git a/x.c b/x.c
 index 8a16faa..9354219 100644
 --- a/x.c
 +++ b/x.c
+@@ -1288,8 +1288,8 @@ xmakeglyphfontspecs(XftGlyphFontSpec *specs, const Glyph *glyphs, int len, int x
+ 		if (glyphidx) {
+ 			specs[numspecs].font = font->match;
+ 			specs[numspecs].glyph = glyphidx;
+-			specs[numspecs].x = (short)xp;
+-			specs[numspecs].y = (short)yp;
++			specs[numspecs].x = (short)xp + cxoffset;
++			specs[numspecs].y = (short)yp + cyoffset;
+ 			xp += runewidth;
+ 			numspecs++;
+ 			continue;
 @@ -1441,6 +1441,10 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
  		bg = temp;
  	}
