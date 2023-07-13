@@ -73,7 +73,6 @@ ttf-croscore
 ttf-dejavu
 ttf-droid
 ttf-go-nerd
-ttf-jetbrains-mono
 ttf-liberation
 ttf-roboto
 unclutter
