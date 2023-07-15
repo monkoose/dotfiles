@@ -5,6 +5,7 @@ atool
 awesome
 base
 base-devel
+bash-language-server
 bat
 bottom
 chezmoi
@@ -16,6 +17,8 @@ ethtool
 exa
 fd
 fish
+fisher
+fontforge
 fzf
 gimp
 git
@@ -31,16 +34,19 @@ keyd
 lf
 linux
 linux-firmware
+lua-language-server
 lxappearance
 man-db
 mediainfo
 mesa-utils
 mesa-vdpau
 mlocate
+moreutils
 mpv
 mtpfs
 mtr
 ncurses-git
+neovim-git
 nodejs
 noto-fonts
 noto-fonts-emoji
@@ -57,6 +63,7 @@ qt6ct
 ripgrep
 rlwrap
 rofi
+rsync
 scrot
 seahorse
 shellcheck-bin
@@ -68,11 +75,11 @@ tealdeer
 transmission-qt
 trash-cli
 tree
+tree-sitter-cli
 ttf-bitstream-vera
 ttf-croscore
 ttf-dejavu
 ttf-droid
-ttf-go-nerd
 ttf-liberation
 ttf-roboto
 unclutter
