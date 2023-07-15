@@ -5,7 +5,6 @@ atool
 awesome
 base
 base-devel
-bash-language-server
 bat
 bottom
 chezmoi
@@ -25,6 +24,7 @@ git
 glow
 gnome-themes-extra
 go
+gopls
 gpick
 gtk-engine-murrine
 gtk3
@@ -34,7 +34,6 @@ keyd
 lf
 linux
 linux-firmware
-lua-language-server
 lxappearance
 man-db
 mediainfo
@@ -46,7 +45,6 @@ mpv
 mtpfs
 mtr
 ncurses-git
-neovim-git
 nodejs
 noto-fonts
 noto-fonts-emoji

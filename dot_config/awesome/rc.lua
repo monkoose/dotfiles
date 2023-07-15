@@ -140,7 +140,7 @@ local mykeyboardlayout = wibox.widget({
     widget = wibox.container.background,
 })
 mykeyboardlayout:buttons(awful.util.table.join(
-awful.button({ }, 1, function () switch_kbd_layout() end))
+awful.button({ }, 1, function() switch_kbd_layout() end))
 )
 
 -- Wibox {{{1
