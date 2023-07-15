@@ -94,7 +94,7 @@ funcs=(
     _userdirs
     _consolefont
     _st
-    _vim
+    # _vim
 )
 
 if [[ $# -eq 0 ]]

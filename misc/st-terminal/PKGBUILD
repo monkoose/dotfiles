@@ -13,6 +13,17 @@ source=(https://dl.suckless.org/st/$_sourcedir.tar.gz
         st-scrollback-ringbuffer-0.9.diff
         st-fix-buffer-overflow-0.9.diff)
 
+# x.c patch to change any color between 16 and 255
+# @@ -772,7 +772,7 @@
+#  	XRenderColor color = { .alpha = 0xffff };
+#  
+#  	if (!name) {
+# -		if (BETWEEN(i, 16, 255)) { /* 256 color */
+# +		if (BETWEEN(i, 16, 255) && !colorname[i]) { /* 256 color */
+#  			if (i < 6*6*6+16) { /* same colors as xterm */
+#  				color.red   = sixd_to_16bit( ((i-16)/36)%6 );
+#  				color.green = sixd_to_16bit( ((i-16)/6) %6 );
+
 sha256sums=('f36359799734eae785becb374063f0be833cf22f88b4f169cd251b99324e08e7'
             SKIP
             SKIP
