@@ -17,7 +17,6 @@ exa
 fd
 fish
 fisher
-fontforge
 fzf
 gimp
 git
