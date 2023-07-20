@@ -23,7 +23,6 @@ git
 glow
 gnome-themes-extra
 go
-gopls
 gpick
 gtk-engine-murrine
 gtk3

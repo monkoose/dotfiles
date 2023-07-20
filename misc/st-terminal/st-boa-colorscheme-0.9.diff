@@ -116,15 +116,6 @@ diff --git a/x.c b/x.c
 index 8a16faa..9354219 100644
 --- a/x.c
 +++ b/x.c
-@@ -772,7 +772,7 @@
- 	XRenderColor color = { .alpha = 0xffff };
- 
- 	if (!name) {
--		if (BETWEEN(i, 16, 255)) { /* 256 color */
-+		if (BETWEEN(i, 16, 255) && !colorname[i]) { /* 256 color */
- 			if (i < 6*6*6+16) { /* same colors as xterm */
- 				color.red   = sixd_to_16bit( ((i-16)/36)%6 );
- 				color.green = sixd_to_16bit( ((i-16)/6) %6 );
 @@ -1288,8 +1288,8 @@ xmakeglyphfontspecs(XftGlyphFontSpec *specs, const Glyph *glyphs, int len, int x
  		if (glyphidx) {
  			specs[numspecs].font = font->match;

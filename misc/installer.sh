@@ -31,6 +31,7 @@ _vim() {
     git apply ../vim/git-patch.patch
     make reconfig && sudo make install
     cd "$scriptpath" && rm -rf vim-repo
+    sudo ln -s /usr/share/vim/vimfiles /usr/local/share/vim/vimfiles
 }
 
 _st() {

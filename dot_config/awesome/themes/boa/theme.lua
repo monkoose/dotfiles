@@ -3,7 +3,7 @@ local dir = "~/.config/awesome/themes/boa/"
 local layouts = dir .. "layouts/"
 
 local fonts = {
-    mono = "Iosevka Monkoose",
+    mono = "Iosevka Monkoose Bold",
     sans = "Noto Sans Medium",
 }
 
@@ -19,7 +19,7 @@ local colors = {
 return {
     font                = fonts.sans .. " 12",
     clock_font          = fonts.mono .. " 16",
-    keyboardlayout_font = fonts.mono .. " Bold 18",
+    keyboardlayout_font = fonts.mono .. " 18",
 
     grey                = colors.grey,
     black               = colors.black,
@@ -50,7 +50,7 @@ return {
     taglist_fg_occupied = colors.grey,
     taglist_fg_urgent   = colors.red,
     taglist_fg_focus    = colors.yellow,
-    taglist_font        = fonts.mono .. " Bold 16",
+    taglist_font        = fonts.mono .. " 16",
 
     tasklist_bg_focus  = colors.yellow,
     tasklist_bg_normal = colors.grey,

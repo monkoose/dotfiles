@@ -11,6 +11,17 @@ set ratios 1:3:4
 set scrolloff 3
 set shellopts "-eu"
 set tabstop 4
+set cursorpreviewfmt ""
+
+# # hide gitignore files
+# cmd on-cd %{{
+#     hf='.*'
+#     for file in $(git check-ignore *); do
+#         hf+=":${file}"
+#     done
+#     lf -remote "send $id set hiddenfiles $hf"
+# }}
+# on-cd
 
 cmd q quit
 
