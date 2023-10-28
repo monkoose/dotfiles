@@ -26,11 +26,13 @@ _keyd() {
 
 # Install vim with custom features
 _vim() {
+    rm -rf vim-repo
     git clone --depth=1 https://github.com/vim/vim.git vim-repo
     cd vim-repo
     git apply ../vim/git-patch.patch
     make reconfig && sudo make install
     cd "$scriptpath" && rm -rf vim-repo
+    sudo rm -rf /usr/local/share/vim/vimfiles
     sudo ln -s /usr/share/vim/vimfiles /usr/local/share/vim/vimfiles
 }
 
