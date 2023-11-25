@@ -1,2 +1,4 @@
---regex-vim=/^\s*final\s+(\S+)(:\s+\S+)?\s+=\s*.*$/\1/C,constant,definitions/
---regex-vim=/^\s*var\s+(\S+)(:\s+\S+)?\s+=\s*.*$/\1/v,variable,definitions/
+--regex-vim=/^\s*(export)?\s+final\s+(\S+?)(:\s+\S+)?\s+=\s*.*$/\2/C,constant,definitions/
+--regex-vim=/^\s*(export)?\s+const\s+(\S+?)(:\s+\S+)?\s+=\s*.*$/\2/C,constant,definitions/
+--regex-vim=/^\s*(export)?\s+var\s+(\S+?)(:\s+\S+)?\s+=\s*.*$/\2/v,variable,definitions/
+--regex-vim=/^\s*(export)?\s+def\s+(\S+?)\(.*$/\2/f,function,definitions/

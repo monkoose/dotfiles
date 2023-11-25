@@ -28,7 +28,7 @@ cmd q quit
 # This command is called when current file is not a directory
 cmd open &{{
     case $(file --mime-type -Lb $f) in
-        text/*|application/json) lf -remote "send $id \$$EDITOR \$fx";;
+        text/* | application/json | application/javascript) lf -remote "send $id \$$EDITOR \$fx";;
         *) for f in $fx; do $OPENER $f &> /dev/null & done;;
     esac
 }}
@@ -39,9 +39,9 @@ cmd trash-empty %trash-empty -f
 cmd trash-list !trash-list
 
 # open fzf files on start
-cmd vim-cd &{{
-    lf -remote "send $id \$vim +'vim9 timer_start(15, (_) => execute(\"FzfFiles\"))'"
-}}
+# cmd vim-cd &{{
+#     lf -remote "send $id \$vim +'vim9 timer_start(15, (_) => execute(\"FzfFiles\"))'"
+# }}
 
 cmd mkdir %{{
     if [[ "$#" > 0 ]]; then
@@ -119,7 +119,7 @@ map u :{{
 map <backspace> find-prev
 map <c-l> find-next
 map D delete
-map E vim-cd
+# map E vim-cd
 map a extract
 map <a-1> quit
 map x $$f
