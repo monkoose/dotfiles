@@ -7,3 +7,4 @@ Sxiv.background: #1f1a17
 XTerm*faceName: Iosevka Monkoose:pixelsize=20:antialias=true
 XTerm*foreground: white
 XTerm*background: black
+XTerm*buffered: true

@@ -469,9 +469,22 @@ awful.rules.rules = {
     {
         rule_any = {
             class = {
+                "Emacs"
+            },
+            name = {
+                "Question"
+            },
+        },
+        properties = { floating = true }
+    },
+
+    {
+        rule_any = {
+            class = {
                 "mpv",
                 "st-256color",
                 "Zathura",
+                "Emacs",
                 "Sxiv",
                 "Vivaldi-stable",
             },
