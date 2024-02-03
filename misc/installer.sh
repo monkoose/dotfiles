@@ -37,6 +37,7 @@ _vim() {
 }
 
 _st() {
+    # requires patched ncurses with removed  --disable-root-environ flag
     cd st-terminal && makepkg -Csif
     rm -rf pkg src ./*tar.gz ./*tar.zst
     cd "$scriptpath"
