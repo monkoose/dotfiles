@@ -7,7 +7,7 @@ index 91ab8ca..0dff5f6 100644
   * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
   */
 -static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
-+static char *font = "Iosevka Monkoose:pixelsize=20:antialias=true:autohint=true";
++static char *font = "Iosevka Monkoose:pixelsize=16:antialias=true:autohint=true";
  static int borderpx = 2;
  
  /*
@@ -44,13 +44,13 @@ index 91ab8ca..0dff5f6 100644
 -	"cyan3",
 -	"gray90",
 +	"#110e0d",  /* black */
-+	"#d35b4b",  /* red */
-+	"#8f9e44", /* green */
-+	"#c57c41", /* yellow */
-+	"#7680ac", /* blue */
-+	"#b2809f", /* magenta */
-+	"#70a195", /* cyan */
-+	"#b8af96", /* gray90 */
++	"#ff6660",  /* red */
++	"#97b437", /* green */
++	"#e59430", /* yellow */
++	"#84a9b8", /* blue */
++	"#ca8fc7", /* magenta */
++	"#5ab791", /* cyan */
++	"#c2b07f", /* gray90 */
  
  	/* 8 bright colors */
 -	"gray50",
@@ -65,13 +65,13 @@ index 91ab8ca..0dff5f6 100644
 -	[255] = 0,
 -
 +	"#6e685a", /* gray50 */
-+	"#d35b4b", /* red */
-+	"#8f9e44", /* green */
-+	"#caa247", /* yellow */
-+	"#7680ac", /* blue */
-+	"#b2809f", /* magenta */
-+	"#70a195", /* cyan */
-+	"#b8af96", /* white */
++	"#ff6660", /* red */
++	"#97b437", /* green */
++	"#c5b134", /* yellow */
++	"#84a9b8", /* blue */
++	"#ca8fc7", /* magenta */
++	"#5ab791", /* cyan */
++	"#c2b07f", /* white */
 +
 +        [255] = 0,
  	/* more colors can be added after 255 to use with DefaultXX */
@@ -81,7 +81,7 @@ index 91ab8ca..0dff5f6 100644
 -	"black", /* default background colour */
 +	"#d02a61",
 +	"#302c29",
-+	"#b8af96", /* default foreground colour */
++	"#c2b07f", /* default foreground colour */
 +	"#110e0d", /* default background colour */
  };
  

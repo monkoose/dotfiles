@@ -11,7 +11,8 @@ source=(https://dl.suckless.org/st/$_sourcedir.tar.gz
         st-boa-colorscheme-0.9.diff
         st-color-underline-0.9.diff
         st-scrollback-ringbuffer-0.9.diff
-        st-fix-buffer-overflow-0.9.diff)
+        st-fix-buffer-overflow-0.9.diff
+        st-remove-tic.diff)
 
 # x.c patch to change any color between 16 and 255
 # @@ -772,7 +772,7 @@
@@ -28,6 +29,7 @@ sha256sums=('f36359799734eae785becb374063f0be833cf22f88b4f169cd251b99324e08e7'
             SKIP
             SKIP
             SKIP
+            SKIP
             SKIP)
 _makeopts="--directory=$_sourcedir"
 
@@ -37,6 +39,7 @@ prepare() {
   patch -i $srcdir/st-color-underline-0.9.diff
   patch -i $srcdir/st-scrollback-ringbuffer-0.9.diff
   patch -i $srcdir/st-fix-buffer-overflow-0.9.diff
+  patch Makefile $srcdir/st-remove-tic.diff
 }
 
 build() {
