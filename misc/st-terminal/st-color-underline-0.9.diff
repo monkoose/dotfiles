@@ -153,10 +153,10 @@ index 8a16faa..3132f6e 100644
 +				GCForeground | GCLineStyle | GCCapStyle,
 +				&ugcv);
 +			XFillRectangle(xw.dpy, XftDrawDrawable(xw.draw), ugc, winx,
-+				winy + dc.font.ascent + 3, width, 1);
++				winy + dc.font.ascent + 2, width, 1);
 +			XFreeGC(xw.dpy, ugc);
 +		} else {
-+			XftDrawRect(xw.draw, fg, winx, winy + dc.font.ascent + 3, width, 1);
++			XftDrawRect(xw.draw, fg, winx, winy + dc.font.ascent + 2, width, 1);
 +		}
  	}
  

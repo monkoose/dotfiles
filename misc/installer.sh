@@ -39,7 +39,7 @@ _vim() {
 _st() {
     # requires patched ncurses with removed  --disable-root-environ flag
     cd st-terminal && makepkg -Csif
-    # rm -rf pkg src ./*tar.gz ./*tar.zst
+    rm -rf pkg src ./*tar.gz ./*tar.zst
     tic -sx /usr/share/st-terminal/st.info
     sudo tic -sx /usr/share/st-terminal/st.info
     cd "$scriptpath"
