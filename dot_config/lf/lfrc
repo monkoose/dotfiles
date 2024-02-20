@@ -1,4 +1,4 @@
-set previewer '~/.config/lf/previewer.sh'
+# set previewer '~/.config/lf/previewer.sh'
 set autoquit
 set drawbox
 set errorfmt "\033[37;48;5;52;1m %s \033[0m"
@@ -33,15 +33,16 @@ cmd open &{{
     esac
 }}
 
-cmd delete %trash $fx
-cmd trash-restore $printf '\nTrash contains:\n' && rlwrap trash-restore
-cmd trash-empty %trash-empty -f
-cmd trash-list !trash-list
+# requires https://github.com/umlx5h/gtrash
+cmd delete %gtrash put $fx
+cmd gtr $gtrash restore
+cmd gtf !gtrash find
+cmd gtc $gtrash prune --day 0
 
 # open fzf files on start
-# cmd vim-cd &{{
-#     lf -remote "send $id \$vim +'vim9 timer_start(15, (_) => execute(\"FzfFiles\"))'"
-# }}
+cmd vim-cd &{{
+    lf -remote "send $id \$vim +'vim9 timer_start(15, (_) => execute(\"FzfFiles\"))'"
+}}
 
 cmd mkdir %{{
     if [[ "$#" > 0 ]]; then
@@ -87,6 +88,7 @@ cmd zip ${{
 }}
 
 # paste copied/moved files with overwrite
+# requires rsync
 cmd paste-overwrite &{{
     set -f
     mode=$(head -1 ~/.local/share/lf/files)
@@ -109,6 +111,9 @@ cmd paste-overwrite &{{
 # custom keybindings
 map g/ cd /
 map gu cd /usr
+map gtr gtr
+map gtf gtf
+map gtc gtc
 map <c-j> half-down
 map <c-k> half-up
 map ; read
@@ -119,7 +124,7 @@ map u :{{
 map <backspace> find-prev
 map <c-l> find-next
 map D delete
-# map E vim-cd
+map E vim-cd
 map a extract
 map <a-1> quit
 map x $$f
