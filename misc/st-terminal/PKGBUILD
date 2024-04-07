@@ -11,6 +11,7 @@ source=(https://dl.suckless.org/st/$_sourcedir.tar.gz
         st-boa-colorscheme-0.9.diff
         st-color-underline-0.9.diff
         st-scrollback-ringbuffer-0.9.diff
+        st-appsync-0.9.diff
         st-fix-buffer-overflow-0.9.diff
         st-remove-tic.diff)
 
@@ -26,6 +27,7 @@ source=(https://dl.suckless.org/st/$_sourcedir.tar.gz
 #  				color.green = sixd_to_16bit( ((i-16)/6) %6 );
 
 sha256sums=('f36359799734eae785becb374063f0be833cf22f88b4f169cd251b99324e08e7'
+            SKIP
             SKIP
             SKIP
             SKIP
