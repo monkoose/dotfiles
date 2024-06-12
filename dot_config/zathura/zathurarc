@@ -14,3 +14,4 @@ set sandbox none
 set notification-bg "#353595"
 set notification-error-bg "#cccccc"
 set notification-warning-bg "#cccccc"
+set selection-clipboard clipboard
