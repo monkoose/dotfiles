@@ -22,8 +22,9 @@ local naughty = require("naughty")
 local gears = require("gears")
 
 local lgi = require('lgi')
-local icon_theme = lgi.Gtk.IconTheme.get_default()
-local IconLookupFlags = lgi.Gtk.IconLookupFlags
+local Gtk = lgi.require('Gtk', '3.0')
+local icon_theme = Gtk.IconTheme.get_default()
+local IconLookupFlags = Gtk.IconLookupFlags
 
 local req_path = ...
 local power = require(req_path .. ".upower_dbus")

@@ -30,8 +30,9 @@ local req_path = ...
 local pulse = require(req_path .. ".pulseaudio_dbus")
 
 local lgi = require('lgi')
-local icon_theme = lgi.Gtk.IconTheme.get_default()
-local IconLookupFlags = lgi.Gtk.IconLookupFlags
+local Gtk = lgi.require('Gtk', '3.0')
+local icon_theme = Gtk.IconTheme.get_default()
+local IconLookupFlags = Gtk.IconLookupFlags
 
 local icon_size = 64
 local icon_flags = {IconLookupFlags.GENERIC_FALLBACK}
