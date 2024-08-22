@@ -468,26 +468,13 @@ awful.rules.rules = {
       keys = clientkeys,
       screen = awful.screen.preferred,
       placement = awful.placement.no_overlap + awful.placement.no_offscreen,
-      buttons = clientbuttons
+      buttons = clientbuttons,
     },
   },
 
   {
     rule_any = {
       class = {
-        "Emacs"
-      },
-      name = {
-        "Question"
-      },
-    },
-    properties = { floating = true }
-  },
-
-  {
-    rule_any = {
-      class = {
-        "mpv",
         "st-256color",
         "Zathura",
         "Emacs",
@@ -501,10 +488,16 @@ awful.rules.rules = {
   {
     rule_any = {
       class = {
-        "Blender"
+        "transmission-gtk",
       },
     },
-    properties = { maximized = true, floating = true }
+    except_any = {
+      name = {
+        "Transmission Preferences",
+        "Torrent Options",
+      },
+    },
+    properties = { maximized = true },
   },
 
   {
@@ -513,9 +506,9 @@ awful.rules.rules = {
         "Gpick",
         "Git-gui--askpass",
         "Lxappearance",
-        "Pavucontrol",
+        "pavucontrol",
         "Gcr-prompter",
-        "Gimp"
+        "Gimp",
       },
       type = {
         "dialog",
@@ -524,9 +517,19 @@ awful.rules.rules = {
         "pop-up",
       }
     },
-    properties = { floating = true },
+    properties = {
+      floating = true,
+      placement = awful.placement.centered,
+    },
+  },
+
+  {
+    rule_any = {
+      class = { "Blender", "Godot" },
+      instance = { "Godot Engine" },
+    },
     callback = function(c)
-      awful.placement.centered(c, nil)
+      awful.placement.centered(c)
     end,
   },
 }
@@ -540,10 +543,18 @@ client.connect_signal("manage", function(c)
   end
 end)
 
+client.connect_signal("property::size", function(c)
+  if c.maximized then
+    c.border_width = 0
+  else
+    c.border_width = beautiful.border_width
+  end
+end)
+
 client.connect_signal("focus", function(c)
   c.border_color = beautiful.border_focus
   if c.maximized then
-    c.border_width = "0"
+    c.border_width = 0
   else
     c.border_width = beautiful.border_width
   end
@@ -552,7 +563,7 @@ end)
 client.connect_signal("unfocus", function(c)
   c.border_color = beautiful.border_normal
   if c.maximized then
-    c.border_width = "0"
+    c.border_width = 0
   else
     c.border_width = beautiful.border_width
   end

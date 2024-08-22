@@ -131,7 +131,7 @@ local function get_wifi_icon(service)
     configuration = "acquiring",
     disconnect = "offline",
   }
-  if show_signal[service.State] then
+  if show_signal[service.State] and service.Strength then
     local s = service.Strength
     local v
     if s <= 0 then

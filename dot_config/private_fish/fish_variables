@@ -21,7 +21,7 @@ SETUVAR _fisher_ilancosman_2F_tide_40_v6_files:\x7e/\x2econfig/fish/functions/_t
 SETUVAR _fisher_plugins:ilancosman/tide\x40v6
 SETUVAR _fisher_upgraded_to_4_4:\x1d
 SETUVAR _tide_left_items:pwd\x1egit\x1enewline\x1echaracter
-SETUVAR _tide_prompt_15985:\x1b\x5b0m\x1b\x5b0m\x1b\x5b0m\x1b\x5b0m\x1b\x5b0m\x40PWD\x40\x1b\x5b0m\x1b\x5b0m\x1b\x5b0m\x20\x1e\x1b\x5b38\x3b2\x3b95\x3b215\x3b0m\u276f
+SETUVAR _tide_prompt_33029:\x1b\x5b0m\x1b\x5b0m\x1b\x5b0m\x1b\x5b0m\x1b\x5b0m\x40PWD\x40\x1b\x5b0m\x1b\x5b0m\x1b\x5b0m\x20\x1e\x1b\x5b38\x3b2\x3b95\x3b215\x3b0m\u276f
 SETUVAR _tide_right_items:status\x1ecmd_duration\x1econtext\x1ejobs\x1enode\x1epython\x1ego
 SETUVAR fish_color_autosuggestion:5a4b38
 SETUVAR fish_color_cancel:red\x1e\x2d\x2dbold
