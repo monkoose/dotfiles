@@ -389,32 +389,31 @@ local clientkeys = awful.util.table.join(
     { description = "toggle keep on top", group = "client" }),
   awful.key({ modkey }, "n", function(c) c.minimized = true end,
     { description = "minimize", group = "client" }),
+
   awful.key({ modkey }, "e", function(c)
       if c.floating then
         awful.titlebar.hide(c)
         c.floating = false
       else
+        c.floating = true
         if not c.maximized then
           awful.titlebar.show(c)
         end
-        c.floating = true
       end
     end,
     { description = "toggle floating", group = "client" }),
-  awful.key({ modkey }, "m",
-    function(c)
+
+  awful.key({ modkey }, "m", function(c)
       if c.maximized then
+        c.maximized = false
+        c.border_width = beautiful.border_width
         if c.floating then
           awful.titlebar.show(c)
         end
-        c.maximized = false
-        c:raise()
-        c.border_width = beautiful.border_width
       else
         awful.titlebar.hide(c)
         c.maximized = true
-        c:raise()
-        c.border_width = "0"
+        c.border_width = 0
       end
     end,
     { description = "maximize", group = "client" })
@@ -533,42 +532,30 @@ client.connect_signal("manage", function(c)
       not c.size_hints.program_position then
     awful.placement.no_offscreen(c)
   end
-  if c.floating and not c.maximized then
-    awful.titlebar.show(c)
+  if c.maximized then
+    c.border_width = 0
   else
-    awful.titlebar.hide(c)
+    c.border_width = beautiful.border_width
+    if c.floating then
+      awful.titlebar.show(c)
+    end
   end
 end)
 
 client.connect_signal("property::size", function(c)
   if c.maximized then
-    awful.titlebar.hide(c)
+    c.border_width = 0
   else
-    if c.floating then
-      awful.titlebar.show(c)
-    else
-      awful.titlebar.hide(c)
-    end
     c.border_width = beautiful.border_width
   end
 end)
 
 client.connect_signal("focus", function(c)
   c.border_color = beautiful.border_focus
-  if c.maximized then
-    c.border_width = 0
-  else
-    c.border_width = beautiful.border_width
-  end
 end)
 
 client.connect_signal("unfocus", function(c)
   c.border_color = beautiful.border_normal
-  if c.maximized then
-    c.border_width = 0
-  else
-    c.border_width = beautiful.border_width
-  end
 end)
 
 client.connect_signal("request::titlebars", function(c)
