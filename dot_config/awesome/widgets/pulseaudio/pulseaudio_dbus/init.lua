@@ -41,7 +41,7 @@
   @copyright 2017-2020 Stefano Mazzucco and contributors
 ]]
 
-local proxy = require("dbus_proxy")
+local proxy = require("widgets.dbus_proxy")
 local lgi =  require("lgi")
 local DBusConnectionFlags = lgi.Gio.DBusConnectionFlags
 

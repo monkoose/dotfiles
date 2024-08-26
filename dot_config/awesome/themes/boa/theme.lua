@@ -14,6 +14,8 @@ local colors = {
   red = "#c73c42",
   brown = "#5c4b42",
   orange = "#bf7643",
+  titlebar_normal = "#362f2c",
+  titlebar_focus = "#a86b41",
 }
 
 return {
@@ -68,4 +70,13 @@ return {
   tooltip_border_color      = colors.yellow,
   tooltip_border_width      = dpi(1),
   tooltip_font              = fonts.sans .. " 14",
+
+  titlebar_fg_normal = "#545151",
+  titlebar_fg_focus  = "#2c2727",
+  titlebar_bg_normal = colors.titlebar_normal,
+  titlebar_bg_focus  = colors.titlebar_focus,
+  titlebar_close_button_normal = layouts .. "close_button.png",
+  titlebar_close_button_focus = layouts .. "close_button_focus.png",
+  titlebar_close_button_focus_hover = layouts .. "close_button_hover.png",
+  titlebar_close_button_focus_press = layouts .. "close_button_press.png",
 }

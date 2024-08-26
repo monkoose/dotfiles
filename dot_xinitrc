@@ -15,7 +15,9 @@ fi
 # xset -b &
 
 # Set background color
-xsetroot -solid "#413e33"
+# requires hsetroot
+xcompmgr &
+hsetroot -solid "#413e33"
 
 # Hide cursor
 unclutter --fork --timeout=3 --jitter=3 --exclude-root

@@ -37,11 +37,15 @@ _vim() {
 }
 
 _st() {
+    # should ignore st in /etc/pacman.conf
+    # Also link to xterm, so it is better recognizable by xdg-open
+    # ln -s /usr/bin/st /usr/bin/xterm
+    #
     # requires patched ncurses with removed  --disable-root-environ flag
     cd st-terminal && makepkg -Csif
     rm -rf pkg src ./*tar.gz ./*tar.zst
-    tic -sx /usr/share/st-terminal/st.info
-    sudo tic -sx /usr/share/st-terminal/st.info
+    tic -sx /usr/share/st/st.info
+    sudo tic -sx /usr/share/st/st.info
     cd "$scriptpath"
 }
 

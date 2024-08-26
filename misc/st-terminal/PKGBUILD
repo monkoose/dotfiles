@@ -1,4 +1,4 @@
-pkgname=st-terminal
+pkgname=st
 pkgver=0.9
 pkgrel=5
 pkgdesc='A simple virtual terminal emulator for X.'

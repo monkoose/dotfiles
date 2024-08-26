@@ -5,7 +5,7 @@
 
 -- Standard awesome library
 local awful = require("awful")
--- local gears = require("gears")
+local gears = require("gears")
 require("awful.autofocus")
 
 -- Widget and layout library
@@ -81,7 +81,8 @@ local mymainmenu = awful.menu({
     { "filemanager", filemanager },
     { "refresh",     awesome.restart },
     { "reboot",      reboot },
-    { "poweroff",    poweroff }
+    { "poweroff",    poweroff },
+    { "logout",        function() awesome.quit() end },
   }
 })
 
@@ -89,7 +90,7 @@ local mymainmenu = awful.menu({
 
 -- local power = wibox.container.margin(require('widgets.power'), 0, 4, 2, 4)
 local pulse = wibox.container.margin(require("widgets.pulseaudio"), 4, 0, 2, 4)
-local connman = wibox.container.margin(require("widgets.connman"), 8, 0, 2, 4)
+-- local connman = wibox.container.margin(require("widgets.connman"), 8, 0, 2, 4)
 
 -- Clock
 local clock = wibox.widget({
@@ -252,7 +253,7 @@ awful.screen.connect_for_each_screen(function(s)
       wibox.container.margin(mykeyboardlayout, 4, 0, 0, 4),
       -- power,
       pulse,
-      connman,
+      -- connman,
       wibox.container.margin(wibox.widget.systray(), 2, 2, 2, 4),
       clock,
       wibox.container.margin(s.mylayoutbox, 3, 3, 2, 4)
@@ -380,9 +381,7 @@ local clientkeys = awful.util.table.join(
     { description = "toggle fullscreen", group = "client" }),
   awful.key({ modkey, "Shift" }, "q", function(c) c:kill() end,
     { description = "close", group = "client" }),
-  awful.key({ modkey, "Control" }, "space", awful.client.floating.toggle,
-    { description = "toggle floating", group = "client" }),
-  awful.key({ modkey, "Control" }, "Return", function(c) c:swap(awful.client.getmaster()) end,
+  awful.key({ modkey, "Shift" }, "Return", function(c) c:swap(awful.client.getmaster()) end,
     { description = "move to master", group = "client" }),
   awful.key({ modkey }, "o", function(c) c:move_to_screen() end,
     { description = "move to screen", group = "client" }),
@@ -390,14 +389,30 @@ local clientkeys = awful.util.table.join(
     { description = "toggle keep on top", group = "client" }),
   awful.key({ modkey }, "n", function(c) c.minimized = true end,
     { description = "minimize", group = "client" }),
+  awful.key({ modkey }, "e", function(c)
+      if c.floating then
+        awful.titlebar.hide(c)
+        c.floating = false
+      else
+        if not c.maximized then
+          awful.titlebar.show(c)
+        end
+        c.floating = true
+      end
+    end,
+    { description = "toggle floating", group = "client" }),
   awful.key({ modkey }, "m",
     function(c)
       if c.maximized then
-        c.maximized = not c.maximized
+        if c.floating then
+          awful.titlebar.show(c)
+        end
+        c.maximized = false
         c:raise()
         c.border_width = beautiful.border_width
       else
-        c.maximized = not c.maximized
+        awful.titlebar.hide(c)
+        c.maximized = true
         c:raise()
         c.border_width = "0"
       end
@@ -467,7 +482,7 @@ awful.rules.rules = {
       raise = true,
       keys = clientkeys,
       screen = awful.screen.preferred,
-      placement = awful.placement.no_overlap + awful.placement.no_offscreen,
+      placement = awful.placement.centered + awful.placement.no_offscreen,
       buttons = clientbuttons,
     },
   },
@@ -477,24 +492,6 @@ awful.rules.rules = {
       class = {
         "st-256color",
         "Zathura",
-        "Emacs",
-        "Sxiv",
-        "Vivaldi-stable",
-      },
-    },
-    properties = { maximized = true },
-  },
-
-  {
-    rule_any = {
-      class = {
-        "transmission-gtk",
-      },
-    },
-    except_any = {
-      name = {
-        "Transmission Preferences",
-        "Torrent Options",
       },
     },
     properties = { maximized = true },
@@ -509,28 +506,23 @@ awful.rules.rules = {
         "pavucontrol",
         "Gcr-prompter",
         "Gimp",
+        "Blender",
+        "Godot",
       },
       type = {
         "dialog",
       },
       role = {
         "pop-up",
-      }
+      },
     },
     properties = {
       floating = true,
-      placement = awful.placement.centered,
     },
   },
 
-  {
-    rule_any = {
-      class = { "Blender", "Godot" },
-      instance = { "Godot Engine" },
-    },
-    callback = function(c)
-      awful.placement.centered(c)
-    end,
+  { rule = { instance = "Godot_Engine" },
+    properties = { floating = true },
   },
 }
 
@@ -541,12 +533,22 @@ client.connect_signal("manage", function(c)
       not c.size_hints.program_position then
     awful.placement.no_offscreen(c)
   end
+  if c.floating and not c.maximized then
+    awful.titlebar.show(c)
+  else
+    awful.titlebar.hide(c)
+  end
 end)
 
 client.connect_signal("property::size", function(c)
   if c.maximized then
-    c.border_width = 0
+    awful.titlebar.hide(c)
   else
+    if c.floating then
+      awful.titlebar.show(c)
+    else
+      awful.titlebar.hide(c)
+    end
     c.border_width = beautiful.border_width
   end
 end)
@@ -567,6 +569,44 @@ client.connect_signal("unfocus", function(c)
   else
     c.border_width = beautiful.border_width
   end
+end)
+
+client.connect_signal("request::titlebars", function(c)
+    local buttons = gears.table.join(
+        awful.button({ }, 1, function()
+            c:emit_signal("request::activate", "titlebar", {raise = true})
+            awful.mouse.client.move(c)
+        end),
+        awful.button({ }, 3, function()
+            c:emit_signal("request::activate", "titlebar", {raise = true})
+            awful.mouse.client.resize(c)
+        end)
+    )
+
+    local top_titlebar = awful.titlebar(c, {
+        size = 26,
+    })
+
+    top_titlebar:setup {
+        { -- Left
+            wibox.container.margin(awful.titlebar.widget.iconwidget(c), 5, 5),
+            buttons = buttons,
+            layout = wibox.layout.fixed.horizontal,
+        },
+        { -- Middle
+            { -- Title
+                align  = "center",
+                widget = awful.titlebar.widget.titlewidget(c)
+            },
+            buttons = buttons,
+            layout = wibox.layout.flex.horizontal
+        },
+        { -- Right
+            wibox.container.margin(awful.titlebar.widget.closebutton(c), 5, 6, 5, 5),
+            layout = wibox.layout.fixed.horizontal
+        },
+        layout = wibox.layout.align.horizontal
+    }
 end)
 
 -- vim:foldmethod=marker

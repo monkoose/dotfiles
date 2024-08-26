@@ -77,3 +77,4 @@ alias mem_clean="sudo swapoff -a && sudo swapon -a && sudo sh -c 'echo 3 >/proc/
 alias brnorm="xrandr --output DVI-D-0 --brightness 1 --gamma 1:1:1"
 alias brlow="xrandr --output DVI-D-0 --brightness 0.6 --gamma 1:1:0.9"
 alias broff="xrandr --output DVI-D-0 --brightness 0.4 --gamma 1:1:0.9"
+alias run-polkit="/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
