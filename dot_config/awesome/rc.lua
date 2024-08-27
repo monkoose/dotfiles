@@ -88,9 +88,7 @@ local mymainmenu = awful.menu({
 
 -- Widgets {{{1
 
--- local power = wibox.container.margin(require('widgets.power'), 0, 4, 2, 4)
 local pulse = wibox.container.margin(require("widgets.pulseaudio"), 4, 0, 2, 4)
--- local connman = wibox.container.margin(require("widgets.connman"), 8, 0, 2, 4)
 
 -- Clock
 local clock = wibox.widget({
@@ -544,6 +542,12 @@ end)
 
 client.connect_signal("property::size", function(c)
   if c.maximized then
+    local _, titlebar_height = c:titlebar_top()
+    if titlebar_height ~= 0 then
+      awful.titlebar.hide(c)
+      c.maximized = false
+      c.maximized = true
+    end
     c.border_width = 0
   else
     c.border_width = beautiful.border_width
