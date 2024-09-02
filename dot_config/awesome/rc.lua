@@ -206,7 +206,10 @@ awful.screen.connect_for_each_screen(function(s)
 
   s.mytasklist = awful.widget.tasklist({
     screen = s,
-    filter = awful.widget.tasklist.filter.currenttags,
+    filter = function(c, screen)
+      if not c.name then return false end
+      return awful.widget.tasklist.filter.currenttags(c, screen)
+    end,
     buttons = tasklist_buttons,
     layout = {
       spacing = 10,
@@ -563,7 +566,10 @@ client.connect_signal("unfocus", function(c)
 end)
 
 client.connect_signal("request::titlebars", function(c)
-    if not c.name then return end
+    if not c.name then
+      c.border_width = 0
+      return
+    end
 
     local buttons = gears.table.join(
         awful.button({ }, 1, function()
