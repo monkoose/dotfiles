@@ -14,10 +14,14 @@ fi
 # xset s off &
 # xset -b &
 
-# Set background color
-# requires hsetroot
+# Custom window compositor
 xcompmgr &
+
+# Set background color requires `hsetroot`
 hsetroot -solid "#413e33"
+
+# Configure applications under X, requires `xsettingsd`
+systemctl --user start xsettingsd.service
 
 # Hide cursor
 unclutter --fork --timeout=3 --jitter=3 --exclude-root

@@ -563,6 +563,8 @@ client.connect_signal("unfocus", function(c)
 end)
 
 client.connect_signal("request::titlebars", function(c)
+    if not c.name then return end
+
     local buttons = gears.table.join(
         awful.button({ }, 1, function()
             c:emit_signal("request::activate", "titlebar", {raise = true})
