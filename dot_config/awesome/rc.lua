@@ -508,6 +508,7 @@ awful.rules.rules = {
         "Gimp",
         "Blender",
         "Godot",
+        "dmengine",
       },
       type = {
         "dialog",
@@ -566,7 +567,7 @@ client.connect_signal("unfocus", function(c)
 end)
 
 client.connect_signal("request::titlebars", function(c)
-    if not c.name then
+    if c.class == "Godot" and not c.name then
       c.border_width = 0
       return
     end
