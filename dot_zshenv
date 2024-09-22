@@ -4,7 +4,7 @@ export PAGER="less"
 export MANPAGER="nvim +Man!"
 export BROWSER="vivaldi-stable"
 export GOPATH=$HOME/.go
-export PATH=$PATH:$HOME/.local/bin:$GOPATH/bin:$HOME/Documents/godot
+export PATH=$PATH:$HOME/.local/bin:$GOPATH/bin
 export GTK_THEME="Adwaita:dark"
 
 export LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:

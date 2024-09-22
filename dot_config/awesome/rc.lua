@@ -207,7 +207,7 @@ awful.screen.connect_for_each_screen(function(s)
   s.mytasklist = awful.widget.tasklist({
     screen = s,
     filter = function(c, screen)
-      if not c.name then return false end
+      -- if c.class == "Godot" and not c.name then return false end
       return awful.widget.tasklist.filter.currenttags(c, screen)
     end,
     buttons = tasklist_buttons,
@@ -499,6 +499,9 @@ awful.rules.rules = {
 
   {
     rule_any = {
+      instance = {
+         "Godot_Engine",
+      },
       class = {
         "Gpick",
         "Git-gui--askpass",
@@ -507,7 +510,6 @@ awful.rules.rules = {
         "Gcr-prompter",
         "Gimp",
         "Blender",
-        "Godot",
         "dmengine",
       },
       type = {
@@ -522,7 +524,7 @@ awful.rules.rules = {
     },
   },
 
-  { rule = { instance = "Godot_Engine" },
+  { rule = { instance = "com.defold.editor.Start", name = nil },
     properties = { floating = true },
   },
 }
@@ -567,10 +569,10 @@ client.connect_signal("unfocus", function(c)
 end)
 
 client.connect_signal("request::titlebars", function(c)
-    if c.class == "Godot" and not c.name then
-      c.border_width = 0
-      return
-    end
+    -- if c.class == "Godot" and not c.name then
+    --   c.border_width = 0
+    --   return
+    -- end
 
     local buttons = gears.table.join(
         awful.button({ }, 1, function()
