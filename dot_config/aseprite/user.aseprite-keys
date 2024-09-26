@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<keyboard version="1">
+    <commands>
+        <key command="PaletteEditor" shortcut="A" removed="true"/>
+    </commands>
+    <tools>
+        <key tool="rectangular_marquee" shortcut="A"/>
+        <key tool="lasso" shortcut="Q" removed="true"/>
+        <key tool="lasso" shortcut="B"/>
+        <key tool="magic_wand" shortcut="W" removed="true"/>
+        <key tool="magic_wand" shortcut="I"/>
+        <key tool="pencil" shortcut="B" removed="true"/>
+        <key tool="pencil" shortcut="Q"/>
+        <key tool="eyedropper" shortcut="I" removed="true"/>
+        <key tool="eyedropper" shortcut="W"/>
+        <key tool="paint_bucket" shortcut="G" removed="true"/>
+        <key tool="paint_bucket" shortcut="R"/>
+        <key tool="blur" shortcut="R" removed="true"/>
+        <key tool="blur" shortcut="G"/>
+        <key tool="jumble" shortcut="R" removed="true"/>
+        <key tool="jumble" shortcut="G"/>
+    </tools>
+    <quicktools/>
+    <actions/>
+    <wheel/>
+    <drag/>
+</keyboard>
