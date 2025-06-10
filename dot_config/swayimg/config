@@ -1,0 +1,38 @@
+[viewer]
+window = #0c0900aa
+
+[gallery]
+window = #0c0900aa
+border = #ac9000cc
+
+[font]
+size = 16
+color = #cccccc
+background = #0c0900cc
+
+[info]
+info_timeout = 0
+
+[info.viewer]
+top_left = status
+bottom_left = name,imagesize,+frame
+bottom_right = scale
+
+[info.gallery]
+top_left = status
+bottom_left = name
+bottom_right = none
+
+[keys.viewer]
+w = zoom optimal
+s = zoom fit
+j = next_file
+l = next_file
+h = prev_file
+k = prev_file
+
+[keys.gallery]
+j = next_file
+l = next_file
+h = prev_file
+k = prev_file
