@@ -1,0 +1,25 @@
+[Default Applications]
+application/pdf=org.pwmt.zathura.desktop
+application/epub+zip=org.pwmt.zathura.desktop
+application/x-fictionbook=org.pwmt.zathura.desktop
+x-scheme-handler/http=vivaldi-stable.desktop
+x-scheme-handler/https=vivaldi-stable.desktop
+image/png=swayimg.desktop
+image/gif=swayimg.desktop
+image/jpeg=swayimg.desktop
+image/tiff=swayimg.desktop
+image/x-bmp=swayimg.desktop
+image/x-portable-anymap=swayimg.desktop
+image/x-portable-bitmap=swayimg.desktop
+image/x-portable-graymap=swayimg.desktop
+image/x-tga=swayimg.desktop
+image/x-xpixmap=swayimg.desktop
+application/javascript=nvim.desktop
+inode/directory=pcmanfm.desktop
+
+[Added Associations]
+x-scheme-handler/http=vivaldi-stable.desktop;
+x-scheme-handler/https=vivaldi-stable.desktop;
+text/plain=nvim.desktop;
+text/javascript=nvim.desktop;
+application/wasm=nvim.desktop;
