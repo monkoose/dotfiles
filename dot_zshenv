@@ -23,7 +23,7 @@ or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32
 *.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:';
 
 # fzf
-export FZF_DEFAULT_OPTS='--pointer=● --marker=▶ --bind "ctrl-/:toggle-preview,alt-i:toggle-all,ctrl-n:preview-page-down,ctrl-p:preview-page-up,ctrl-l:accept,ctrl-r:clear-screen,alt-k:next-history,alt-j:previous-history,ctrl-alt-j:page-down,ctrl-alt-k:page-up" --height 40% --layout=reverse --tabstop=2 --color=hl:#f158a6,fg+:#b8af96,hl+:#f158a6,bg+:#3b312b,border:#40362f,gutter:#1f1a17,pointer:#d3c94b,prompt:#838bb4,marker:#d24b98,info:#70a17c,spinner:#e35b4b,query:#c57c41 --info=inline --margin=0,1,0,0 --prompt=">> " --history=/home/monkoose/.cache/.fzf_history --history-size=100'
+export FZF_DEFAULT_OPTS='--bind "ctrl-/:toggle-preview,alt-i:toggle-all,ctrl-n:preview-page-down,ctrl-p:preview-page-up,ctrl-l:accept,ctrl-r:clear-screen,alt-k:next-history,alt-j:previous-history,ctrl-alt-j:page-down,ctrl-alt-k:page-up" --height 40% --layout=reverse --tabstop=2 --color=hl:#f158a6,fg+:#b8af96,hl+:#f158a6,bg+:#3b312b,border:#40362f,gutter:#1f1a17,pointer:#d3c94b,prompt:#838bb4,marker:#d24b98,info:#70a17c,spinner:#e35b4b,query:#c57c41 --info=inline --margin=0,1,0,0 --prompt=">> " --history=/home/monkoose/.cache/.fzf_history --history-size=100'
 export FZF_DEFAULT_COMMAND='fd --type=f --hidden --follow --strip-cwd-prefix --ignore'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --color=always"
 export FZF_CTRL_T_OPTS="--ansi --preview 'bat -p --color=always --line-range=:100 -- {} 2> /dev/null'"

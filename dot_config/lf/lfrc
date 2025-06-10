@@ -58,14 +58,7 @@ cmd mkdir %{{
 cmd extract %{{
     set -f
     for file in $fx; do
-        case "$(file -b --mime-type $file)" in
-            *x-tar|*zip|*x-bzip2|*x-rar|*x-7z*)
-                atool --extract $file
-                ;;
-            *)
-                echo " $file is not archive."
-                ;;
-        esac
+        atool --extract $file || echo " $file is not archive."
     done
 }}
 

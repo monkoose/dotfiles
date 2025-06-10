@@ -26,4 +26,5 @@ systemctl --user start xsettingsd.service
 # Hide cursor
 unclutter --fork --timeout=3 --jitter=3 --exclude-root
 
+# exec i3
 exec awesome -a

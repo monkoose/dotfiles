@@ -88,7 +88,7 @@ local mymainmenu = awful.menu({
 
 -- Widgets {{{1
 
-local pulse = wibox.container.margin(require("widgets.pulseaudio"), 4, 0, 2, 4)
+-- local pulse = wibox.container.margin(require("widgets.pulseaudio"), 4, 0, 2, 4)
 
 -- Clock
 local clock = wibox.widget({
@@ -253,7 +253,7 @@ awful.screen.connect_for_each_screen(function(s)
       layout = wibox.layout.fixed.horizontal,
       wibox.container.margin(mykeyboardlayout, 4, 0, 0, 4),
       -- power,
-      pulse,
+      -- pulse,
       -- connman,
       wibox.container.margin(wibox.widget.systray(), 2, 2, 2, 4),
       clock,
@@ -524,9 +524,9 @@ awful.rules.rules = {
     },
   },
 
-  { rule = { instance = "com.defold.editor.Start", name = nil },
-    properties = { floating = true },
-  },
+  -- { rule = { instance = "Cosmowars" },
+  --   properties = { tag = " 3" },
+  -- },
 }
 
 -- Signals {{{1

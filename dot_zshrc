@@ -26,7 +26,7 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 zstyle ':fzf-tab:*' fzf-min-height 12
 zstyle ':fzf-tab:*' fzf-flags '--height=12'
 zstyle ':fzf-tab:*' fzf-flags '--color=hl:#f158a6'
-zstyle ':fzf-tab:*' fzf-flags '--bind=ctrl-i:toggle'
+zstyle ':fzf-tab:*' fzf-flags '--bind=ctrl-i:toggle,ctrl-l:accept'
 
 znap source zsh-users/zsh-history-substring-search
 typeset -g HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=green,fg=black,'
@@ -73,8 +73,7 @@ alias gtc="gtrash prune --day 0"
 alias yar="yay -Rscn"
 alias tree="tree -C"
 alias mem_clean="sudo swapoff -a && sudo swapon -a && sudo sh -c 'echo 3 >/proc/sys/vm/drop_caches'"
-# alias set_mac="sudo $HOME/Documents/utils/random_mac.sh"
-alias brnorm="xrandr --output DVI-D-0 --brightness 1 --gamma 1:1:1"
-alias brlow="xrandr --output DVI-D-0 --brightness 0.6 --gamma 1:1:0.9"
-alias broff="xrandr --output DVI-D-0 --brightness 0.4 --gamma 1:1:0.9"
+# alias brnorm="xrandr --output DVI-D-0 --brightness 1 --gamma 1:1:1"
+# alias brlow="xrandr --output DVI-D-0 --brightness 0.6 --gamma 1:1:0.9"
+# alias broff="xrandr --output DVI-D-0 --brightness 0.4 --gamma 1:1:0.9"
 alias run-polkit="/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
